@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom';
 import './css/App.css';
 import Header from './header';
-import MainContain from './imgs';
+import MainContain from './frontpage';
 
 function Top() {
     return (
