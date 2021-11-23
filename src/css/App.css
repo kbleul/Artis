@@ -4,5 +4,11 @@ body {
    padding: 0;
 }
 
+ul {
+   list-style: none;
+   padding: 0;
+   margin:0;
+}
 #search_svg:hover,
 #search_svg:focus {  fill: "red"; }
+

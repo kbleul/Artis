@@ -1,14 +1,17 @@
-import ReactDOM from 'react-dom';
-import './css/App.css';
-import Header from './header';
-import MainContain from './frontpage';
 
-function Top() {
-    return (
-  <article id="main_wrapper" >
-    <Header />
-    <MainContain />
-  </article>)
+import React from "react";
+import ReactDOM from "react-dom";
+import Header from "./header";
+import Frontpage from "./frontpage";
+import './css/App.css';
+
+
+export default function App() {
+  
+    return (<article>
+        <Header />
+    <Frontpage />
+      </article>)
 }
 
- ReactDOM.render(<Top /> , document.getElementById("root") );
+ReactDOM.render(<App />, document.getElementById("root"));
