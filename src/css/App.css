@@ -1,4 +1,7 @@
 
+* {
+   box-sizing: border-box;
+}
 body {
    margin: 0;
    padding: 0;
@@ -12,3 +15,5 @@ ul {
 #search_svg:hover,
 #search_svg:focus {  fill: "red"; }
 
+button:hover,
+button:focus { opacity: 0.8; }
