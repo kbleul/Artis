@@ -96,8 +96,20 @@ function ViewImg() {
 
 function CommentsSection(prop) {
 
-    let accountkey = Object.keys(prop.artobject.comments);
+    //track comment textarea
+    const [comment , setcomment] = useState("");
+    const [commentfocus, set_commentfocus] = useState(false);
+    //track list of comments
+    const [comments, setcomments] = useState(prop.artobject.comments);
 
+    let accountkey = Object.keys(comments);
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        prop.artobject.comments.unknown = comment;
+       setcomments({unknown : comment , ...comments  });
+       setcomment("");
+      }
 
     return (<section>
         <div style={commentcancle_containerstyle}>
@@ -107,12 +119,11 @@ function CommentsSection(prop) {
                     <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8L4.646 5.354a.5.5 0 0 1 0-.708z" /></g></svg>
             </button></div>
             <div style={commentform_container_style}>
-               <form>
-                <textarea style={commenttextarea_style} value="" placeholder="Add comment..."></textarea>
-                <div style={commnetbtns_container_style}>
-                <button style={commentcanclebtn_style}>CANCLE</button>
-                <button style={commentsubmitbtn_style}>COMMENT</button>
-                </div>
+               <form onSubmit={handleSubmit}>
+                <textarea onFocus={() => set_commentfocus(true)} style={commenttextarea_style} value={comment} placeholder="Add comment..." onChange={(e) => setcomment(e.target.value) }></textarea>
+
+                {commentfocus && <CancleComment focusFunc= {set_commentfocus} emptyCommentForm_func = {setcomment}/>}
+
                </form>
             </div>
 
@@ -121,12 +132,19 @@ function CommentsSection(prop) {
                 {
                     accountkey.map( (account) => 
                         <><li style={commentaccount_style} key={account}>{account}</li>
-                        <li style={commenttext_style} key={`comment${account}`}>{prop.artobject.comments[account]}</li></>
-                    )
+                        <li style={commenttext_style} key={`comment${account}`}>{prop.artobject.comments[account]}</li></> )
                 }
             </ul>
             </section>
     </section>);
+}
+
+
+function CancleComment(prop){
+   return (<div style={commnetbtns_container_style}>
+    <button onClick={() => { prop.focusFunc(false); prop.emptyCommentForm_func("") } } style={commentcanclebtn_style}>CANCLE</button>
+    <input type="submit" style={commentsubmitbtn_style} value="Comment"/>
+    </div>)
 }
 
 function SuggestionImgs(prop) {

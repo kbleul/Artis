@@ -24,7 +24,7 @@ function MainContain() {
     const [imgfive_likebtn_status, set_imgfive_likebtn_status] = useState("white");
     const [imgsix_likebtn_status, set_imgsix_likebtn_status] = useState("white");
 
-
+    
 
 
     const maincontainer_style = {
