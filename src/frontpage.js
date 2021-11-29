@@ -87,17 +87,22 @@ function ViewImg() {
     return (<section>
         <img style={viewimg_imgstyle} src={art.img} alt="" />
         <section style={halfpagecontainer_style}>
-            <div style={arttitlecontainer_style}><p style={arttitlepara_style}>{art.title} - {art.artist}</p></div>
+            <div style={arttitlecontainer_style}>
+               <p style={arttitlepara_style}>{art.title} - {art.artist}</p>
+            </div>
 
-            {showcomments ? <CommentsSection artobject={art} commentFunction={setshowcomments} /> : <SuggestionImgs artobject={art} commentFunction={setshowcomments} />}
-        </section></section>
+            {showcomments ? <CommentsSection artobject={art} commentFunction={setshowcomments} />
+                : <SuggestionImgs artobject={art} commentFunction={setshowcomments} />}
+
+        </section>
+    </section>
     );
 }
 
 function CommentsSection(prop) {
 
     //track comment textarea
-    const [comment , setcomment] = useState("");
+    const [comment, setcomment] = useState("");
     const [commentfocus, set_commentfocus] = useState(false);
     //track list of comments
     const [comments, setcomments] = useState(prop.artobject.comments);
@@ -107,9 +112,10 @@ function CommentsSection(prop) {
     const handleSubmit = (event) => {
         event.preventDefault();
         prop.artobject.comments.unknown = comment;
-       setcomments({unknown : comment , ...comments  });
-       setcomment("");
-      }
+        setcomments({ unknown: comment, ...comments });
+        setcomment("");
+        ++prop.artobject.commentsSize;
+    }
 
     return (<section>
         <div style={commentcancle_containerstyle}>
@@ -118,44 +124,51 @@ function CommentsSection(prop) {
                 <svg xmlns="http://www.w3.org/2000/svg" width="2.3em" height="2.3em" viewBox="0 0 16 16"><g fill="gray">
                     <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8L4.646 5.354a.5.5 0 0 1 0-.708z" /></g></svg>
             </button></div>
-            <div style={commentform_container_style}>
-               <form onSubmit={handleSubmit}>
-                <textarea onFocus={() => set_commentfocus(true)} style={commenttextarea_style} value={comment} placeholder="Add comment..." onChange={(e) => setcomment(e.target.value) }></textarea>
+        <div style={commentform_container_style}>
+            <form onSubmit={handleSubmit}>
+                <textarea onFocus={() => set_commentfocus(true)} style={commenttextarea_style} value={comment} placeholder="Add comment..." onChange={(e) => setcomment(e.target.value)}></textarea>
 
-                {commentfocus && <CancleComment focusFunc= {set_commentfocus} emptyCommentForm_func = {setcomment}/>}
+                {commentfocus && <CancleComment focusFunc={set_commentfocus} emptyCommentForm_func={setcomment} />}
 
-               </form>
-            </div>
+            </form>
+        </div>
 
-            <section>
+        <section>
             <ul>
                 {
-                    accountkey.map( (account) => 
+                    accountkey.map((account) =>
                         <><li style={commentaccount_style} key={account}>{account}</li>
-                        <li style={commenttext_style} key={`comment${account}`}>{prop.artobject.comments[account]}</li></> )
+                            <li style={commenttext_style} key={`comment${account}`}>{prop.artobject.comments[account]}</li></>)
                 }
             </ul>
-            </section>
+        </section>
     </section>);
 }
 
 
-function CancleComment(prop){
-   return (<div style={commnetbtns_container_style}>
-    <button onClick={() => { prop.focusFunc(false); prop.emptyCommentForm_func("") } } style={commentcanclebtn_style}>CANCLE</button>
-    <input type="submit" style={commentsubmitbtn_style} value="Comment"/>
+function CancleComment(prop) {
+    return (<div style={commnetbtns_container_style}>
+        <button onClick={() => { prop.focusFunc(false); prop.emptyCommentForm_func("") }} style={commentcanclebtn_style}>Cancle</button>
+        <input type="submit" style={commentsubmitbtn_style} value="COMMENT" />
     </div>)
 }
 
 function SuggestionImgs(prop) {
 
-    const [imglike_status, set_imglike_status] = useState(prop.artobject.likestatus[0]);
-    const [likecounter_status, set_likecounter_status] = useState(prop.artobject.likestatus[3])
-    const [stroke, setstroke] = useState("black");
+    const [art, setart] = useState(prop.artobject);
+    const [imglike_status, set_imglike_status] = useState(art.likestatus[0]);
+    const [likecounter_status, set_likecounter_status] = useState(art.likestatus[3])
+    const [stroke, setstroke] = useState(art.likestatus[4]);
 
     useEffect(() => {
         if (imglike_status === "red") { setstroke("red"); }
-    }, []);
+        if (art !== prop.artobject) {
+            setart(prop.artobject);
+            set_imglike_status(prop.artobject.likestatus[0]);
+            set_likecounter_status(prop.artobject.likestatus[3]);
+            setstroke(prop.artobject.likestatus[4]);
+        }
+    }, [imglike_status, art, prop.artobject]);
 
     const likeDislike = () => {
         if (imglike_status === "white") {
@@ -163,12 +176,14 @@ function SuggestionImgs(prop) {
             setstroke("red");
             set_likecounter_status(++prop.artobject.likestatus[3]);
             prop.artobject.likestatus[0] = "red";
+            prop.artobject.likestatus[4] = "red";
         }
         else {
             set_imglike_status("white");
             setstroke("black");
             set_likecounter_status(--prop.artobject.likestatus[3]);
             prop.artobject.likestatus[0] = "white";
+            prop.artobject.likestatus[4] = "black";
         }
 
     }
@@ -182,7 +197,7 @@ function SuggestionImgs(prop) {
                     onMouseOver={(e) => { e.target.style.opacity = ".5"; }} onMouseOut={(e) => { e.target.style.opacity = "1"; }}>
                     <svg xmlns="http://www.w3.org/2000/svg"
                         width="1.5em" height="1.5em" viewBox="0 0 48 48">
-                        <path d="M15 8C8.925 8 4 12.925 4 19c0 11 13 21 20 23.326C31 40 44 30 44 19c0-6.075-4.925-11-11-11c-3.72 0-7.01 1.847-9 4.674A10.987 10.987 0 0 0 15 8z" fill={imglike_status} stroke={stroke} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                        <path d="M15 8C8.925 8 4 12.925 4 19c0 11 13 21 20 23.326C31 40 44 30 44 19c0-6.075-4.925-11-11-11c-3.72 0-7.01 1.847-9 4.674A10.987 10.987 0 0 0 15 8z" fill={prop.artobject.likestatus[0]} stroke={stroke} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" /></svg>
                 </button>
                 <p style={likecountpar_style}>{likecounter_status}</p>
             </div>
@@ -201,9 +216,12 @@ function SuggestionImgs(prop) {
 
             <ul>
                 {Object.entries(arts).map(([slug, { title, artist, price, img, boxstatus }]) =>
-                    <li key={slug}>
-                        <img style={frontimg_style} src={img} alt="" />
-                    </li>
+                    <Link to={`/${slug}`}>
+
+                        <li key={`${title}-${price}`}>
+                            <img style={frontimg_style} src={img} alt="" />
+                        </li>
+                    </Link>
 
                 )}
             </ul>
@@ -364,72 +382,79 @@ const commentcancle_parastyle = {
     textTransform: "Capitalize",
 }
 const commentform_container_style = {
-    borderBottom : "1px solid #d7d1d1",
-    paddingBottom : "1.7rem",
+    borderBottom: "1px solid #d7d1d1",
+    paddingBottom: "1.7rem",
 }
 const commnetbtns_container_style = {
     float: "right",
     marginRight: "5%",
 }
 const commenttextarea_style = {
-    width : "90%",
+    width: "90%",
     marginLeft: "5%",
     border: "none",
     borderBottom: "1px solid",
     height: "3.3rem",
-    paddingTop : "5%",
-    outline : "none",
+    paddingTop: "5%",
+    outline: "none",
 }
 const commentcanclebtn_style = {
-    backgroundColor : "inherit",
-    fontSize : ".8rem",
+    backgroundColor: "inherit",
+    fontSize: ".8rem",
     border: "none",
-    textTransform : "capitalize",
-    paddingTop : ".35rem",
+    textTransform: "uppercase",
+    paddingTop: ".35rem",
 }
 const commentsubmitbtn_style = {
-    backgroundColor : "inherit",
-    fontSize : ".8rem",
+    backgroundColor: "inherit",
+    fontSize: ".8rem",
     border: "none",
-    color : "green",
-    textTransform : "capitalize",
-    paddingTop : ".35rem",
+    color: "green",
+    textTransform: "capitalize",
+    paddingTop: ".35rem",
 }
 const suggestioncontainer_style = {
     backgroundColor: "rgb(61, 56, 56)"
 }
 const commentaccount_style = {
-    fontSize : ".7rem",
-    color : "gray",
-    paddingLeft : "2%",
-    paddingTop : "1%",
+    fontSize: ".7rem",
+    color: "gray",
+    paddingLeft: "2%",
+    paddingTop: "1%",
 }
 const commenttext_style = {
-    fontSize : ".8rem",
-    paddingLeft : "5%",
-    paddingRight : "1%",
-    marginTop : ".3rem",
-    paddingBottom : ".5rem",
-    borderBottom : "1px solid #d7d1d1",
+    fontSize: ".8rem",
+    paddingLeft: "5%",
+    paddingRight: "3%",
+    marginTop: ".3rem",
+    paddingBottom: ".5rem",
+    borderBottom: "1px solid #d7d1d1",
 }
 
 
 const arts = {
     img1: {
-        account: "Lora Mikeal", title: "The Duel", artist: "Loreal Milka", price: "750$ ", img: img1, boxstatus: [], likestatus: ["white", "", "", 556],
-        comments: { chris: "Nice !!" }, commentsSize: 1 },
+        account: "Lora Mikeal", title: "The Duel", artist: "Loreal Milka", price: "750$ ", img: img1, boxstatus: [], likestatus: ["white", "", "", 556, "black"],
+        comments: { chris: "Nice !!" }, commentsSize: 1
+    },
     img2: {
-        account: "Kibrom Leul", title: "Familer Life", artist: "Eva Neewman", price: "260$ ", img: img2, boxstatus: [], likestatus: ["white", "", "", 29],
-        comments: { kevin: "", malcom: "very good price for a very good work ?", Leul: "Good price", malcomb: "Nice tecnique?" }, commentsSize: 4 },
-    img3: { 
-        account: "Mikel Gold", title: "City Life Algarve,Portugal 1977", artist: "Nikoal Mulion", price: "1100$ ", img: img3, boxstatus: [],likestatus: ["white", "", "", 1910], comments: { Natan: "wow !", NUNN_Iummm: "perfect" }, commentsSize: 2 },
+        account: "Kibrom Leul", title: "Familer Life", artist: "Eva Neewman", price: "260$ ", img: img2, boxstatus: [], likestatus: ["white", "", "", 29, "black"],
+        comments: { kevin: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto quaerat ut maiores quas voluptatibus neque distinctio veritatis ipsam quae nulla totam aperiam quos, optio, nemo dolorum reprehenderit sunt, modi maxime!", malcom: "very good price for a very good work ?", Leul: "Good price", malcomb: "Nice tecnique?" }, commentsSize: 4
+    },
+    img3: {
+        account: "Mikel Gold", title: "City Life Algarve,Portugal 1977", artist: "Nikoal Mulion", price: "1100$ ", img: img3, boxstatus: [], likestatus: ["white", "", "", 1910, "black"], comments: { Natan: "wow !", NUNN_Iummm: "perfect" }, commentsSize: 2
+    },
     img4: {
-        account: "Naten09", title: "Fox Connect In", artist: "Bumia Lemia", price: "1050$ ", img: img4, boxstatus: [], likestatus: ["white", "", "", 89],
-        comments: { murr: "Love this work. The price is too high tho..", malcomb: "why is this soo expensive ?" }, commentsSize: 2 },
-    img5: { 
-        account: "Anchelote--", title: "The Particle Dao", artist: "Mitsu Aminkio", price: "266$ ", img: img5, boxstatus: [], likestatus: ["white", "", "", 244], 
-        comments : {} ,  commentsSize: 0 },
-    img6: { account: "Pochetinio Polu", title: "Waves of Hope", artist: "Humer Zimmermam", price: "499$ ", img: img6, boxstatus: [], likestatus: ["white", "", "", 3601], 
-    comments: { Liumen: "Love this work. The price is too high tho..", Adem632: "why is this soo expensive ?", Blin22en: "Love this work. The price is too high tho..", NUrhussen: "Beutifull ?", Beth_white: "    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minus est accusamus et iste asperiores repudiandae vitae impedit vero rem atque.", Mark_Goldberg: " Lorem ipsum, dolor sit amet consectetur adipisicing elit.", opsen: "Love this work. The price is too high tho..", Havertz: "Minus est accusamus et iste asperiores repudiandae vitae impedit vero rem atque. ?", Merhawit26: "Love this work. The price is too high tho..", Viky: "Minus est accusamus et iste asperiores repudiandae vitae impedit vero rem atque. ?", umbergen: "Love this work. The price is too high tho..", Adem2: "why is this soo expensive ?" }, commentsSize: 12 },
+        account: "Naten09", title: "Fox Connect In", artist: "Bumia Lemia", price: "1050$ ", img: img4, boxstatus: [], likestatus: ["white", "", "", 89, "black"],
+        comments: { murr2: "Love this work. The price is too high tho..", ma55omb: "why is this soo expensive ?" }, commentsSize: 2
+    },
+    img5: {
+        account: "Anchelote--", title: "The Particle Dao", artist: "Mitsu Aminkio", price: "266$ ", img: img5, boxstatus: [], likestatus: ["white", "", "", 244, "black"],
+        comments: {}, commentsSize: 0
+    },
+    img6: {
+        account: "Pochetinio Polu", title: "Waves of Hope", artist: "Humer Zimmermam", price: "499$ ", img: img6, boxstatus: [], likestatus: ["white", "", "", 3601, "black"],
+        comments: { Liumen: "Love this work. The price is too high tho..", Adem632: "why is this soo expensive ?", Blin22en: "Love this work. The price is too high tho..", NUrhussen: "Beutifull ?", Beth_white: "    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minus est accusamus et iste asperiores repudiandae vitae impedit vero rem atque.", Mark_Goldberg: " Lorem ipsum, dolor sit amet consectetur adipisicing elit.", opsen: "Love this work. The price is too high tho..", Havertz: "Minus est accusamus et iste asperiores repudiandae vitae impedit vero rem atque. ?", Merhawit26: "Love this work. The price is too high tho..", Viky: "Minus est accusamus et iste asperiores repudiandae vitae impedit vero rem atque. ?", umbergen: "Love this work. The price is too high tho..", Adem2: "why is this soo expensive ?" }, commentsSize: 12
+    },
 }
 
