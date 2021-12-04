@@ -23,6 +23,77 @@ export default function Frontpage() {
 
 }
 
+function Header() {
+
+    const [searchsvg_fill, set_searchsvg_fill] = useState("#fff");
+    const [showsearchform, set_showsearchform] = useState(false);
+    const [searchinput , set_searchinput ] = useState("");
+    const [showsearchsuggestion , set_showsearchsuggestion] = useState(false);
+    const [searchfilter , set_searchfilter] = useState([]);
+
+
+    function Searchinput() {
+        return (<><form onSubmit={handleSearch}>
+            <input autoFocus={true} key="search" style={searchinput_style} type="text" list="suggestions" value={searchinput} onChange={onSearchInput}/>
+            </form>
+        </>);
+    }
+
+    const onSearchInput = e => {
+        set_searchfilter([]);
+        set_searchinput( e.target.value );
+        console.log( e.target.value === "")
+
+        if(searchinput === "") { 
+            set_searchfilter([]);
+                }
+else {
+        arts_metadata.filter(val => {
+            
+            if(val.toLowerCase().includes( e.target.value.toLowerCase()))
+            { set_searchfilter(filter => [...filter, val])}
+            
+        })
+    }
+    }
+
+    function SearchSuggestion() {
+        return (
+                <section style={search_suggestioncontainer_style}>
+                {
+                      
+                        searchfilter.map((account) =>
+                        <><li key={account}>{account}</li>
+                           </>)
+                }
+                </section>);
+    }
+
+  const handleSearch = (e) => {
+      e.preventDefault();
+      console.log(`submmited ${searchinput}`)
+   if (showsearchform) {  set_showsearchform(false); set_showsearchsuggestion(false) } 
+   else { set_showsearchform(true); set_showsearchsuggestion(true)}
+    set_searchinput("");
+  }
+    return (<>
+        <header id="header_wrapper" style={header_style}>
+
+            {showsearchform ? <Searchinput />
+                : <h1 id="logo" style={h1}>ARTis</h1>}
+        <button type="submit" onClick={handleSearch}>
+            <svg  onMouseOver={() => { set_searchsvg_fill("red") }} onMouseOut={() => { set_searchsvg_fill("#fff") }}
+
+                xmlns="http://www.w3.org/2000/svg" width="1.4em" height="1.4em" viewBox="0 0 32 32">
+                <path d="M29 27.586l-7.552-7.552a11.018 11.018 0 1 0-1.414 1.414L27.586 29zM4 13a9 9 0 1 1 
+        9 9a9.01 9.01 0 0 1-9-9z" fill={searchsvg_fill} /></svg>
+        </button>
+        </header> 
+        {searchfilter && <SearchSuggestion /> }</>
+        
+        );
+}
+
 function ImageList() {
 
     const [imgone_boxstatus, set_imgone_boxstatus] = useState({ display: "none" });
@@ -32,6 +103,7 @@ function ImageList() {
     const [imgfive_boxstatus, set_imgfive_boxstatus] = useState({ display: "none" });
     const [imgsix_boxstatus, set_imgsix_boxstatus] = useState({ display: "none" });
 
+
     arts.img1.boxstatus = [imgone_boxstatus, set_imgone_boxstatus];
     arts.img2.boxstatus = [imgtwo_boxstatus, set_imgtwo_boxstatus];
     arts.img3.boxstatus = [imgthree_boxstatus, set_imgthree_boxstatus];
@@ -40,7 +112,7 @@ function ImageList() {
     arts.img6.boxstatus = [imgsix_boxstatus, set_imgsix_boxstatus];
 
 
-    return (
+    return (<><Header />
         <section id="main_container" style={maincontainer_style} >
 
             <ul>
@@ -75,6 +147,7 @@ function ImageList() {
                 )}
             </ul>
         </section>
+        </>
     )
 }
 
@@ -84,7 +157,8 @@ function ViewImg() {
     const [showcomments, setshowcomments] = useState(false);
 
     const art = arts[slug];
-    return (<section>
+    return (<><Header />
+        <section>
         <img style={viewimg_imgstyle} src={art.img} alt="" />
         <section style={halfpagecontainer_style}>
             <div style={arttitlecontainer_style}>
@@ -95,7 +169,7 @@ function ViewImg() {
                 : <SuggestionImgs artobject={art} commentFunction={setshowcomments} />}
 
         </section>
-    </section>
+    </section></>
     );
 }
 
@@ -228,6 +302,51 @@ function SuggestionImgs(prop) {
         </section></>);
 }
 
+
+const header_style = {
+    display: "flex",
+    height: "7vh",
+    width: "100%",
+    backgroundColor: "black",
+    justifyContent: "space-detween",
+    alignItems: "center",
+    position: "fixed",
+    top: "0",
+    zIndex: "10",
+}
+const h1 = {
+    color: "white",
+    fontWeight: "900",
+    fontStyle: "cursive",
+    width: "90%",
+    paddingLeft: "2%"
+}
+const searchinput_style = {
+    marginRight: "4%",
+    marginLeft: "2%",
+    width: "85%",
+    height: '1.6rem',
+    border: 'none',
+    outline: 'none',
+    color: 'white',
+    fontWeight: 'bold',
+    borderBottom: '1px solid #fff',
+    backgroundColor: "black",
+}
+const style = {
+    display : 'block',
+}
+/*-----------------------------------------*/
+
+const search_suggestioncontainer_style = {
+    backgroundColor: "gray",
+    position: "absolute",
+    top: "7vh",
+    zIndex: 10,
+    width: "80%",
+}
+
+/*-----------------------------------------*/
 
 
 const halfpagecontainer_style = {
@@ -458,3 +577,5 @@ const arts = {
     },
 }
 
+const arts_metadata = ["The Duel","Familer Life","City Life Algarve,Portugal 1977","Fox Connect In",
+                        "The Particle Dao",  "Waves of Hope"];
