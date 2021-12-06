@@ -28,12 +28,11 @@ function Header() {
     const [searchsvg_fill, set_searchsvg_fill] = useState("#fff");
     const [showsearchform, set_showsearchform] = useState(false);
     const [searchinput , set_searchinput ] = useState("");
-    const [showsearchsuggestion , set_showsearchsuggestion] = useState(false);
     const [searchfilter , set_searchfilter] = useState([]);
 
 
     function Searchinput() {
-        return (<><form onSubmit={handleSearch}>
+        return (<><form style={searchform_style} onSubmit={handleSearch}>
             <input autoFocus={true} key="search" style={searchinput_style} type="text" list="suggestions" value={searchinput} onChange={onSearchInput}/>
             </form>
         </>);
@@ -42,19 +41,17 @@ function Header() {
     const onSearchInput = e => {
         set_searchfilter([]);
         set_searchinput( e.target.value );
-        console.log( e.target.value === "")
 
-        if(searchinput === "") { 
-            set_searchfilter([]);
-                }
-else {
-        arts_metadata.filter(val => {
-            
-            if(val.toLowerCase().includes( e.target.value.toLowerCase()))
-            { set_searchfilter(filter => [...filter, val])}
-            
-        })
-    }
+        if(e.target.value === "") {    set_searchfilter([]);  set_searchfilter("");   }
+
+        else {
+                arts_metadata.filter(val => {
+                    
+                    if(val.toLowerCase().includes( e.target.value.toLowerCase()))
+                    { set_searchfilter(filter => [...filter, val])}
+                    
+                })
+            }
     }
 
     function SearchSuggestion() {
@@ -63,7 +60,7 @@ else {
                 {
                       
                         searchfilter.map((account) =>
-                        <><li key={account}>{account}</li>
+                        <><li style={searchsuggestionlist_style} onClick={() => { set_searchinput(account); set_searchfilter([])}} key={account}>{account}</li>
                            </>)
                 }
                 </section>);
@@ -71,25 +68,43 @@ else {
 
   const handleSearch = (e) => {
       e.preventDefault();
-      console.log(`submmited ${searchinput}`)
-   if (showsearchform) {  set_showsearchform(false); set_showsearchsuggestion(false) } 
-   else { set_showsearchform(true); set_showsearchsuggestion(true)}
+
+   if (showsearchform) {  set_showsearchform(false); set_searchfilter([]); } 
+   else { set_showsearchform(true); }
     set_searchinput("");
+  }
+
+  const searchAction = () => {
+    
+    set_showsearchform(false)
+  
   }
     return (<>
         <header id="header_wrapper" style={header_style}>
 
-            {showsearchform ? <Searchinput />
-                : <h1 id="logo" style={h1}>ARTis</h1>}
-        <button type="submit" onClick={handleSearch}>
+            {showsearchform ? <><Searchinput />  <Link to={`/${searchinput}`} >
+            <button onClick={searchAction} style={searchactionbtn_style}>
+                <svg  onMouseOver={() => { set_searchsvg_fill("red") }} onMouseOut={() => { set_searchsvg_fill("#fff") }}
+
+                xmlns="http://www.w3.org/2000/svg" width="2em" height="1.8em" viewBox="0 0 32 32">
+                <path d="M29 27.586l-7.552-7.552a11.018 11.018 0 1 0-1.414 1.414L27.586 29zM4 13a9 9 0 1 1 
+        9 9a9.01 9.01 0 0 1-9-9z" fill={searchsvg_fill} /></svg>
+            </button>
+    </Link></>
+                : <><h1 id="logo" style={h1}>ARTis</h1>
+
+               
+        <button style={showsearchformbtn_style} type="submit" onClick={handleSearch}>
             <svg  onMouseOver={() => { set_searchsvg_fill("red") }} onMouseOut={() => { set_searchsvg_fill("#fff") }}
 
-                xmlns="http://www.w3.org/2000/svg" width="1.4em" height="1.4em" viewBox="0 0 32 32">
+                xmlns="http://www.w3.org/2000/svg" width="2em" height="1.8em" viewBox="0 0 32 32">
                 <path d="M29 27.586l-7.552-7.552a11.018 11.018 0 1 0-1.414 1.414L27.586 29zM4 13a9 9 0 1 1 
         9 9a9.01 9.01 0 0 1-9-9z" fill={searchsvg_fill} /></svg>
         </button>
+        </>}
         </header> 
-        {searchfilter && <SearchSuggestion /> }</>
+        {searchfilter && <SearchSuggestion />}
+        </>
         
         );
 }
@@ -115,14 +130,14 @@ function ImageList() {
     return (<><Header />
         <section id="main_container" style={maincontainer_style} >
 
-            <ul>
+            <ul className="imglist_container">
                 {Object.entries(arts).map(([slug, { title, artist, price, img, boxstatus }]) =>
-                    <li key={slug}>
+                    <li className="frontpage_image" key={slug}>
 
                         <Link to={`/${slug}`}>
                             <figure className="img_textover" style={img_textover}>
 
-                                <img style={frontimg_style} src={img} alt="" />
+                                <img  style={frontimg_style} src={img} alt="" />
                                 <figcaption style={figcaption_style_visible} className="figcaption"
                                     onMouseOver={() => {
                                         boxstatus[1]({
@@ -148,18 +163,23 @@ function ImageList() {
             </ul>
         </section>
         </>
-    )
+    );
 }
 
 function ViewImg() {
     const { slug } = useParams();
-
     const [showcomments, setshowcomments] = useState(false);
 
-    const art = arts[slug];
+    let art = arts[slug];
+
+    if(art === undefined)
+    {  art = arts[connect_metatdata.get(slug)]}
+
+
     return (<><Header />
         <section>
-        <img style={viewimg_imgstyle} src={art.img} alt="" />
+          <img  style={viewimg_imgstyle} src={art.img} alt="" />
+
         <section style={halfpagecontainer_style}>
             <div style={arttitlecontainer_style}>
                <p style={arttitlepara_style}>{art.title} - {art.artist}</p>
@@ -321,10 +341,11 @@ const h1 = {
     width: "90%",
     paddingLeft: "2%"
 }
+const searchform_style = { width : "88%", }
 const searchinput_style = {
     marginRight: "4%",
     marginLeft: "2%",
-    width: "85%",
+    width: "95%",
     height: '1.6rem',
     border: 'none',
     outline: 'none',
@@ -333,8 +354,14 @@ const searchinput_style = {
     borderBottom: '1px solid #fff',
     backgroundColor: "black",
 }
-const style = {
-    display : 'block',
+const showsearchformbtn_style = {
+    backgroundColor : "black",
+    border : "none",
+    display : "block",
+}
+const searchactionbtn_style = {
+    backgroundColor : "black",
+    border: "none",
 }
 /*-----------------------------------------*/
 
@@ -344,8 +371,17 @@ const search_suggestioncontainer_style = {
     top: "7vh",
     zIndex: 10,
     width: "80%",
+    cursor: "pointer",
+    left: "5vw",
+    paddingLeft : "1rem",
+    fontSize: ".8rem",
 }
-
+const searchsuggestionlist_style = {
+    listStyle: "none",
+    paddingTop: ".4rem",
+    paddingBottom: ".2rem",
+    borderBottom: "1px solid #797474",
+}
 /*-----------------------------------------*/
 
 
@@ -579,3 +615,13 @@ const arts = {
 
 const arts_metadata = ["The Duel","Familer Life","City Life Algarve,Portugal 1977","Fox Connect In",
                         "The Particle Dao",  "Waves of Hope"];
+
+const connect_metatdata = new Map();
+        connect_metatdata.set("The Duel" , "img1");
+        connect_metatdata.set("Familer Life" , "img2");
+        connect_metatdata.set("City Life Algarve,Portugal 1977" , "img3");
+        connect_metatdata.set("Fox Connect In" , "img4");
+        connect_metatdata.set("The Particle Dao" , "img5");
+        connect_metatdata.set("Waves of Hope" , "img6");
+
+   
