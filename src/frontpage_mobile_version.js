@@ -1,7 +1,9 @@
 
 import React from "react";
-import { useParams } from "react-router";
 import { useState, useEffect } from "react";
+import { BrowserRouter as Brouter, Routes, Route, Link } from "react-router-dom";
+import { useParams } from "react-router";
+import styles from "./css/mobile_version_styles";
 import img1 from "./ART/1.jpg";
 import img2 from "./ART/2.jpg";
 import img3 from "./ART/3.jpg";
@@ -10,9 +12,7 @@ import img5 from "./ART/5.jpg";
 import img6 from "./ART/6.jpg";
 
 
-import { BrowserRouter as Brouter, Routes, Route, Link } from "react-router-dom";
-
-export default function Frontpage() {
+export default function Mobilefrontpage() {
 
     return (<Brouter>
         <Routes>
@@ -32,8 +32,8 @@ function Header() {
 
 
     function Searchinput() {
-        return (<><form style={searchform_style} onSubmit={handleSearch}>
-            <input autoFocus={true} key="search" style={searchinput_style} type="text" list="suggestions" value={searchinput} onChange={onSearchInput}/>
+        return (<><form style={styles.searchform_style} onSubmit={handleSearch}>
+            <input autoFocus={true} key="search" style={styles.searchinput_style} type="text" list="suggestions" value={searchinput} onChange={onSearchInput}/>
             </form>
         </>);
     }
@@ -56,11 +56,11 @@ function Header() {
 
     function SearchSuggestion() {
         return (
-                <section style={search_suggestioncontainer_style}>
+                <section style={styles.search_suggestioncontainer_style}>
                 {
                       
                         searchfilter.map((account) =>
-                        <><li style={searchsuggestionlist_style} onClick={() => { set_searchinput(account); set_searchfilter([])}} key={account}>{account}</li>
+                        <><li style={styles.searchsuggestionlist_style} onClick={() => { set_searchinput(account); set_searchfilter([])}} key={account}>{account}</li>
                            </>)
                 }
                 </section>);
@@ -80,10 +80,10 @@ function Header() {
   
   }
     return (<>
-        <header id="header_wrapper" style={header_style}>
+        <header id="header_wrapper" style={styles.header_style}>
 
             {showsearchform ? <><Searchinput />  <Link to={`/${searchinput}`} >
-            <button onClick={searchAction} style={searchactionbtn_style}>
+            <button onClick={searchAction} style={styles.searchactionbtn_style}>
                 <svg  onMouseOver={() => { set_searchsvg_fill("red") }} onMouseOut={() => { set_searchsvg_fill("#fff") }}
 
                 xmlns="http://www.w3.org/2000/svg" width="2em" height="1.8em" viewBox="0 0 32 32">
@@ -91,10 +91,10 @@ function Header() {
         9 9a9.01 9.01 0 0 1-9-9z" fill={searchsvg_fill} /></svg>
             </button>
     </Link></>
-                : <><h1 id="logo" style={h1}>ARTis</h1>
+                : <><h1 id="logo" style={styles.h1}>ARTis</h1>
 
                
-        <button style={showsearchformbtn_style} type="submit" onClick={handleSearch}>
+        <button style={styles.showsearchformbtn_style} type="submit" onClick={handleSearch}>
             <svg  onMouseOver={() => { set_searchsvg_fill("red") }} onMouseOut={() => { set_searchsvg_fill("#fff") }}
 
                 xmlns="http://www.w3.org/2000/svg" width="2em" height="1.8em" viewBox="0 0 32 32">
@@ -128,17 +128,17 @@ function ImageList() {
 
 
     return (<><Header />
-        <section id="main_container" style={maincontainer_style} >
+        <section id="main_container" style={styles.maincontainer_style} >
 
             <ul className="imglist_container">
                 {Object.entries(arts).map(([slug, { title, artist, price, img, boxstatus }]) =>
-                    <li className="frontpage_image" key={slug}>
+                    <li key={slug}>
 
                         <Link to={`/${slug}`}>
-                            <figure className="img_textover" style={img_textover}>
+                            <figure style={styles.img_textover}>
 
-                                <img  style={frontimg_style} src={img} alt="" />
-                                <figcaption style={figcaption_style_visible} className="figcaption"
+                                <img  style={styles.frontimg_style} src={img} alt="" />
+                                <figcaption style={styles.figcaption_style_visible} 
                                     onMouseOver={() => {
                                         boxstatus[1]({
                                             display: "flex",
@@ -152,7 +152,7 @@ function ImageList() {
                                 >
 
                                     <section style={boxstatus[0]}>
-                                        <p style={figcaption_para}>{`${title} by ${artist}`}</p>
+                                        <p style={styles.figcaption_para}>{`${title} by ${artist}`}</p>
                                     </section>
                                 </figcaption>
                             </figure>
@@ -170,6 +170,7 @@ function ViewImg() {
     const { slug } = useParams();
     const [showcomments, setshowcomments] = useState(false);
 
+
     let art = arts[slug];
 
     if(art === undefined)
@@ -178,11 +179,11 @@ function ViewImg() {
 
     return (<><Header />
         <section>
-          <img  style={viewimg_imgstyle} src={art.img} alt="" />
+          <img  style={styles.viewimg_imgstyle} src={art.img} alt="" />
 
-        <section style={halfpagecontainer_style}>
-            <div style={arttitlecontainer_style}>
-               <p style={arttitlepara_style}>{art.title} - {art.artist}</p>
+        <section style={styles.halfpagecontainer_style}>
+            <div style={styles.arttitlecontainer_style}>
+               <p style={styles.arttitlepara_style}>{art.title} - {art.artist}</p>
             </div>
 
             {showcomments ? <CommentsSection artobject={art} commentFunction={setshowcomments} />
@@ -212,15 +213,15 @@ function CommentsSection(prop) {
     }
 
     return (<section>
-        <div style={commentcancle_containerstyle}>
-            <p style={commentcancle_parastyle}>Comments</p>
-            <button style={canclecomment_style} onClick={() => { prop.commentFunction(false) }}>
+        <div style={styles.commentcancle_containerstyle}>
+            <p style={styles.commentcancle_parastyle}>Comments</p>
+            <button style={styles.canclecomment_style} onClick={() => { prop.commentFunction(false) }}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="2.3em" height="2.3em" viewBox="0 0 16 16"><g fill="gray">
                     <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8L4.646 5.354a.5.5 0 0 1 0-.708z" /></g></svg>
             </button></div>
-        <div style={commentform_container_style}>
+        <div style={styles.commentform_container_style}>
             <form onSubmit={handleSubmit}>
-                <textarea onFocus={() => set_commentfocus(true)} style={commenttextarea_style} value={comment} placeholder="Add comment..." onChange={(e) => setcomment(e.target.value)}></textarea>
+                <textarea onFocus={() => set_commentfocus(true)} style={styles.commenttextarea_style} value={comment} placeholder="Add comment..." onChange={(e) => setcomment(e.target.value)}></textarea>
 
                 {commentfocus && <CancleComment focusFunc={set_commentfocus} emptyCommentForm_func={setcomment} />}
 
@@ -231,8 +232,8 @@ function CommentsSection(prop) {
             <ul>
                 {
                     accountkey.map((account) =>
-                        <><li style={commentaccount_style} key={account}>{account}</li>
-                            <li style={commenttext_style} key={`comment${account}`}>{prop.artobject.comments[account]}</li></>)
+                        <><li style={styles.commentaccount_style} key={account}>{account}</li>
+                            <li style={styles.commenttext_style} key={`comment${account}`}>{prop.artobject.comments[account]}</li></>)
                 }
             </ul>
         </section>
@@ -241,9 +242,9 @@ function CommentsSection(prop) {
 
 
 function CancleComment(prop) {
-    return (<div style={commnetbtns_container_style}>
-        <button onClick={() => { prop.focusFunc(false); prop.emptyCommentForm_func("") }} style={commentcanclebtn_style}>Cancle</button>
-        <input type="submit" style={commentsubmitbtn_style} value="COMMENT" />
+    return (<div style={styles.commnetbtns_container_style}>
+        <button onClick={() => { prop.focusFunc(false); prop.emptyCommentForm_func("") }} style={styles.commentcanclebtn_style}>Cancle</button>
+        <input type="submit" style={styles.commentsubmitbtn_style} value="COMMENT" />
     </div>)
 }
 
@@ -283,37 +284,37 @@ function SuggestionImgs(prop) {
     }
 
     return (<>
-        <div style={pricelikebtn_container}>
-            <p style={pricepara_style}>Price : {prop.artobject.price}</p>
+        <div style={styles.pricelikebtn_container}>
+            <p style={styles.pricepara_style}>Price : {prop.artobject.price}</p>
 
-            <div style={likebtn_container}>
-                <button style={likebutton_style} onClick={() => { likeDislike(); }}
+            <div style={styles.likebtn_container}>
+                <button style={styles.likebutton_style} onClick={() => { likeDislike(); }}
                     onMouseOver={(e) => { e.target.style.opacity = ".5"; }} onMouseOut={(e) => { e.target.style.opacity = "1"; }}>
                     <svg xmlns="http://www.w3.org/2000/svg"
                         width="1.5em" height="1.5em" viewBox="0 0 48 48">
                         <path d="M15 8C8.925 8 4 12.925 4 19c0 11 13 21 20 23.326C31 40 44 30 44 19c0-6.075-4.925-11-11-11c-3.72 0-7.01 1.847-9 4.674A10.987 10.987 0 0 0 15 8z" fill={prop.artobject.likestatus[0]} stroke={stroke} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" /></svg>
                 </button>
-                <p style={likecountpar_style}>{likecounter_status}</p>
+                <p style={styles.likecountpar_style}>{likecounter_status}</p>
             </div>
         </div>
-        <div style={accountbuy_container_style}>
-            <p style={accountpar_style}>{prop.artobject.account}</p>
-            <button style={buybtn_style} onMouseOver={(e) => { e.target.style.opacity = ".8"; }} onMouseOut={(e) => { e.target.style.opacity = "1"; }}>Buy</button>
+        <div style={styles.accountbuy_container_style}>
+            <p style={styles.accountpar_style}>{prop.artobject.account}</p>
+            <button style={styles.buybtn_style} onMouseOver={(e) => { e.target.style.opacity = ".8"; }} onMouseOut={(e) => { e.target.style.opacity = "1"; }}>Buy</button>
         </div>
-        <div style={commentbtns_container}>
-            <button style={commentsbtn_style} onClick={() => { prop.commentFunction(true); }}>comments  {prop.artobject.commentsSize}</button>
-            <button style={commentdropdownbtn_style} onClick={() => { prop.commentFunction(true); }}>
+        <div style={styles.commentbtns_container}>
+            <button style={styles.commentsbtn_style} onClick={() => { prop.commentFunction(true); }}>comments  {prop.artobject.commentsSize}</button>
+            <button style={styles.commentdropdownbtn_style} onClick={() => { prop.commentFunction(true); }}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16">
                     <g fill="currentColor"><path d="M2 5.56L2.413 5h11.194l.393.54L8.373 11h-.827L2 5.56z" /></g></svg></button>
         </div>
-        <section id="main_container" style={suggestioncontainer_style} >
+        <section id="main_container" style={styles.suggestioncontainer_style} >
 
             <ul>
                 {Object.entries(arts).map(([slug, { title, artist, price, img, boxstatus }]) =>
                     <Link to={`/${slug}`}>
 
                         <li key={`${title}-${price}`}>
-                            <img style={frontimg_style} src={img} alt="" />
+                            <img style={styles.frontimg_style} src={img} alt="" />
                         </li>
                     </Link>
 
@@ -323,268 +324,7 @@ function SuggestionImgs(prop) {
 }
 
 
-const header_style = {
-    display: "flex",
-    height: "7vh",
-    width: "100%",
-    backgroundColor: "black",
-    justifyContent: "space-detween",
-    alignItems: "center",
-    position: "fixed",
-    top: "0",
-    zIndex: "10",
-}
-const h1 = {
-    color: "white",
-    fontWeight: "900",
-    fontStyle: "cursive",
-    width: "90%",
-    paddingLeft: "2%"
-}
-const searchform_style = { width : "88%", }
-const searchinput_style = {
-    marginRight: "4%",
-    marginLeft: "2%",
-    width: "95%",
-    height: '1.6rem',
-    border: 'none',
-    outline: 'none',
-    color: 'white',
-    fontWeight: 'bold',
-    borderBottom: '1px solid #fff',
-    backgroundColor: "black",
-}
-const showsearchformbtn_style = {
-    backgroundColor : "black",
-    border : "none",
-    display : "block",
-}
-const searchactionbtn_style = {
-    backgroundColor : "black",
-    border: "none",
-}
-/*-----------------------------------------*/
 
-const search_suggestioncontainer_style = {
-    backgroundColor: "gray",
-    position: "absolute",
-    top: "7vh",
-    zIndex: 10,
-    width: "80%",
-    cursor: "pointer",
-    left: "5vw",
-    paddingLeft : "1rem",
-    fontSize: ".8rem",
-}
-const searchsuggestionlist_style = {
-    listStyle: "none",
-    paddingTop: ".4rem",
-    paddingBottom: ".2rem",
-    borderBottom: "1px solid #797474",
-}
-/*-----------------------------------------*/
-
-
-const halfpagecontainer_style = {
-    height: "48vh",
-    overflowY: "scroll",
-}
-const viewimg_imgstyle = {
-    width: "100%",
-    height: "45vh",
-    marginTop: "7vh",
-}
-const maincontainer_style = {
-    backgroundColor: "rgb(61, 56, 56)",
-    overflowY: "scroll",
-    marginTop: "7vh"
-}
-const img_textover = {
-    width: "98%",
-    padding: "0",
-    margin: "0 auto",
-    position: "relative"
-}
-const frontimg_style = {
-    width: "100%",
-    height: "30vh"
-}
-const figcaption_style_visible = {
-    position: "absolute",
-    top: "0",
-    height: "100%",
-    color: "white",
-    fontWeight: "700",
-    fontFamily: "Arial",
-    fontSize: ".8rem",
-    width: "100%",
-}
-const figcaption_para = {
-    width: "85%",
-    marginTop: "49%",
-    whiteSpace: "nowrap",
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    paddingLeft: "2%",
-}
-const arttitlecontainer_style = {
-    margin: "0",
-    borderBottom: "1px solid",
-}
-const arttitlepara_style = {
-    margin: "0",
-    fontFamily: "cursive",
-    marginLeft: "2%",
-    fontWeight: "900",
-    textAlign: "center",
-
-}
-const pricelikebtn_container = {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    height: "7vh",
-    margin: "0 auto",
-    borderBottom: "1px solid #e1dbdb",
-
-}
-const pricepara_style = {
-    paddingLeft: "5%",
-    fontSize: ".9rem",
-    fontWeight: "900",
-    color: "purple",
-    width: "60%",
-
-}
-const likebtn_container = {
-    display: "flex",
-    flexDirection: "column",
-    width: "20%",
-    margin: "0 auto",
-}
-const likebutton_style = {
-    backgroundColor: "rgba(0,0,0,0)",
-    marginRight: "10%",
-    border: "none",
-    paddingLeft: "10%",
-}
-const canclecomment_style = {
-    backgroundColor: "rgba(0,0,0,0)",
-    border: "none",
-    paddingTop: ".3rem",
-    marginRight: "4%",
-}
-const likecountpar_style = {
-    fontSize: ".7rem",
-    fontWeight: "900",
-    margin: "0",
-    alignSelf: "center",
-}
-const buybtn_style = {
-    padding: "0rem 1.6rem",
-    backgroundColor: "#ff6000",
-    color: "black",
-    fontWeight: "700",
-    textTransform: "uppercase",
-    border: "none",
-    height: "2.1rem",
-    marginTop: ".5rem",
-    marginRight: "1.3rem",
-    opacity: "1",
-
-}
-const accountbuy_container_style = {
-    display: "flex",
-    justifyContent: "space-between",
-}
-const accountpar_style = {
-    marginLeft: "5.5%",
-    marginTop: "4.7%",
-    fontSize: ".8rem",
-    textDecoration: "underline",
-}
-const commentbtns_container = {
-    borderBottom: "1px solid grey",
-    borderTop: "1px solid",
-    marginTop: "1%",
-    padding: "2% 3%",
-    display: "flex",
-}
-const commentcancle_containerstyle = {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    borderBottom: "1px solid #e1dbdb",
-
-}
-const commentsbtn_style = {
-    backgroundColor: "rgba(0,0,0,0)",
-    border: "none",
-    textTransform: "Capitalize",
-    fontSize: "1rem",
-    width: "50%",
-    paddingLeft: "2.5%",
-    textAlign: "left",
-}
-const commentdropdownbtn_style = {
-    backgroundColor: "rgba(0,0,0,0)",
-    border: "none",
-    width: "50%",
-    paddingLeft: "37%",
-}
-const commentcancle_parastyle = {
-    paddingLeft: "5%",
-    textTransform: "Capitalize",
-}
-const commentform_container_style = {
-    borderBottom: "1px solid #d7d1d1",
-    paddingBottom: "1.7rem",
-}
-const commnetbtns_container_style = {
-    float: "right",
-    marginRight: "5%",
-}
-const commenttextarea_style = {
-    width: "90%",
-    marginLeft: "5%",
-    border: "none",
-    borderBottom: "1px solid",
-    height: "3.3rem",
-    paddingTop: "5%",
-    outline: "none",
-}
-const commentcanclebtn_style = {
-    backgroundColor: "inherit",
-    fontSize: ".8rem",
-    border: "none",
-    textTransform: "uppercase",
-    paddingTop: ".35rem",
-}
-const commentsubmitbtn_style = {
-    backgroundColor: "inherit",
-    fontSize: ".8rem",
-    border: "none",
-    color: "green",
-    textTransform: "capitalize",
-    paddingTop: ".35rem",
-}
-const suggestioncontainer_style = {
-    backgroundColor: "rgb(61, 56, 56)"
-}
-const commentaccount_style = {
-    fontSize: ".7rem",
-    color: "gray",
-    paddingLeft: "2%",
-    paddingTop: "1%",
-}
-const commenttext_style = {
-    fontSize: ".8rem",
-    paddingLeft: "5%",
-    paddingRight: "3%",
-    marginTop: ".3rem",
-    paddingBottom: ".5rem",
-    borderBottom: "1px solid #d7d1d1",
-}
 
 
 const arts = {
