@@ -17,7 +17,7 @@ export default function App() {
   });
 
   const isDesktopDevice = useMediaQuery({
-    query: "(min-device-width: 769px ) and (max-device-width: 1500px)",
+    query: "(min-device-width: 769px ) and (max-device-width: 1200px)",
   })
   
 

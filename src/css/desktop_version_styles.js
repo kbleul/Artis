@@ -15,8 +15,7 @@ const styles = {
         color: "white",
         fontWeight: "900",
         fontStyle: "cursive",
-        width: "90%",
-        paddingLeft: "2%"
+        marginLeft: "2rem",
     },
     searchform_style: { width: "90%", },
     searchinput_style: {
@@ -35,6 +34,7 @@ const styles = {
         backgroundColor: "black",
         border: "none",
         display: "block",
+        marginLeft: "80%",
     },
     searchactionbtn_style: {
         backgroundColor: "black",
@@ -196,7 +196,8 @@ const styles = {
         //margintop removed
     },
     CommentsSection : {
-        height : "35vh",
+        height : "45.5vh",
+        width : "60%",
         overflowY: "scroll",
     },
     commentbtns_container: {
@@ -207,9 +208,7 @@ const styles = {
         display: "flex",
     },
     commentcancle_containerstyle: {
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
+
         borderBottom: "1px solid #e1dbdb",
 
     },
@@ -267,6 +266,7 @@ const styles = {
     img_suggestioncontainer_style: {
         height : "40vh",
         overflowY: "scroll",
+        marginTop: "3rem",
     },
     commentaccount_style: {
         fontSize: ".7rem",

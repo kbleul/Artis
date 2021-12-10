@@ -90,7 +90,7 @@ function Header() {
         9 9a9.01 9.01 0 0 1-9-9z" fill={searchsvg_fill} /></svg>
                 </button>
             </Link></>
-                : <><h1 id="logo" style={styles.h1}>ARTis</h1>
+                : <><Link to="/"><h1 id="logo" style={styles.h1}>ARTis</h1></Link>
 
 
                     <button style={styles.showsearchformbtn_style} type="submit" onClick={handleSearch}>
@@ -170,13 +170,22 @@ function ViewImg() {
 
     let art = arts[slug];
 
+    const [artobj, setartobj] = useState(art);
+
+    useEffect(() => {
+        
+        set_likecounter_status(artobj.likestatus[3]);
+        setstroke(artobj.likestatus[4]);
+        
+
+    },[artobj])
+
     if (art === undefined) { art = arts[connect_metatdata.get(slug)] }
 
     const [showcomments, setshowcomments] = useState(false);
     const [imglike_status, set_imglike_status] = useState(art.likestatus[0]);
     const [likecounter_status, set_likecounter_status] = useState(art.likestatus[3])
     const [stroke, setstroke] = useState(art.likestatus[4]);
-
 
     const likeDislike = () => {
         if (imglike_status === "white") {
@@ -195,6 +204,54 @@ function ViewImg() {
         }
 
     }
+
+    function CommentsSection() {
+
+        const [comment, setcomment] = useState("");
+        const [commentfocus, set_commentfocus] = useState(false);
+        //track list of comments
+        const [comments, setcomments] = useState(artobj.comments);
+        const [commnetsize, setsommentsize] = useState(artobj.commentsSize);
+    
+        let accountkey = Object.keys(comments);
+    
+        const handleSubmit = (event) => {
+            event.preventDefault();
+            artobj.comments.unknown = comment;
+            setcomments({ unknown: comment, ...comments });
+            setcomment("");
+            ++artobj.commentsSize;
+            setsommentsize(artobj.commentsSize);
+        }
+    
+        return (<section style={styles.CommentsSection} >
+            <div style={styles.commentcancle_containerstyle}>
+                <p style={styles.commentcancle_parastyle}>Comments  {commnetsize}</p>
+            </div>
+    
+                <section  >
+                <div style={styles.commentform_container_style}>
+                    <form onSubmit={handleSubmit}>
+                        <textarea onFocus={() => set_commentfocus(true)} style={styles.commenttextarea_style} value={comment} placeholder="Add comment..." onChange={(e) => setcomment(e.target.value)}></textarea>
+    
+                        {commentfocus && <CancleComment focusFunc={set_commentfocus} emptyCommentForm_func={setcomment} />}
+    
+                    </form>
+                </div>
+    
+                <section>
+                    <ul>
+                        {
+                            accountkey.map((account) =>
+                                <><li style={styles.commentaccount_style} key={account}>{account}</li>
+                                    <li style={styles.commenttext_style} key={`comment${account}`}>{artobj.comments[account]}</li></>)
+                        }
+                    </ul>
+                </section>
+            </section>
+        </section>);
+    }
+    
 
 
 
@@ -231,59 +288,14 @@ function ViewImg() {
 
                 <article style={styles.bottombox_maincontainer}>
 
-                    <CommentsSection artobject={art} commentFunction={setshowcomments} />
-                    <SuggestionImgs artobject={art} commentFunction={setshowcomments} />
+                    <CommentsSection artobject={artobj} commentFunction={setshowcomments} />
+                    <SuggestionImgs artobject={art} commentFunction={setshowcomments} imgfunction={setartobj}/>
                 </article>
             </section>
         </section></>
     );
 }
 
-function CommentsSection(prop) {
-
-    //track comment textarea
-    const [comment, setcomment] = useState("");
-    const [commentfocus, set_commentfocus] = useState(false);
-    //track list of comments
-    const [comments, setcomments] = useState(prop.artobject.comments);
-
-    let accountkey = Object.keys(comments);
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        prop.artobject.comments.unknown = comment;
-        setcomments({ unknown: comment, ...comments });
-        setcomment("");
-        ++prop.artobject.commentsSize;
-    }
-
-    return (<section >
-        <div style={styles.commentcancle_containerstyle}>
-            <p style={styles.commentcancle_parastyle}>Comments</p>
-        </div>
-
-            <section style={styles.CommentsSection} >
-            <div style={styles.commentform_container_style}>
-                <form onSubmit={handleSubmit}>
-                    <textarea onFocus={() => set_commentfocus(true)} style={styles.commenttextarea_style} value={comment} placeholder="Add comment..." onChange={(e) => setcomment(e.target.value)}></textarea>
-
-                    {commentfocus && <CancleComment focusFunc={set_commentfocus} emptyCommentForm_func={setcomment} />}
-
-                </form>
-            </div>
-
-            <section>
-                <ul>
-                    {
-                        accountkey.map((account) =>
-                            <><li style={styles.commentaccount_style} key={account}>{account}</li>
-                                <li style={styles.commenttext_style} key={`comment${account}`}>{prop.artobject.comments[account]}</li></>)
-                    }
-                </ul>
-            </section>
-        </section>
-    </section>);
-}
 
 
 function CancleComment(prop) {
@@ -305,7 +317,7 @@ function SuggestionImgs(prop) {
                         <Link to={`/${slug}`}>
 
                             <li key={`${title}-${price}`}>
-                                <img style={styles.frontimg_style} src={img} alt="" />
+                                <img style={styles.frontimg_style} src={img} alt="" onClick={()=> prop.imgfunction(arts[slug])} />
                             </li>
                         </Link>
 
