@@ -1,9 +1,9 @@
 const styles = {
     header_style: {
         display: "flex",
-        height: "9vh",
+        height: "7vh",
         width: "100%",
-        backgroundColor: "red",
+        backgroundColor: "black",
         justifyContent: "space-detween",
         alignItems: "center",
         position: "fixed",
@@ -16,9 +16,10 @@ const styles = {
         fontWeight: "900",
         fontStyle: "cursive",
         width: "90%",
-        paddingLeft: "2%"
+        paddingLeft: "2%",
+        fontSize: "2rem",//adedd
     },
-     searchform_style : { width : "88%", },
+     searchform_style : { width : "90%", },
      searchinput_style : {
         marginRight: "4%",
         marginLeft: "2%",
@@ -30,6 +31,7 @@ const styles = {
         fontWeight: 'bold',
         borderBottom: '1px solid #fff',
         backgroundColor: "black",
+        fontSize : "1.1rem", //added
     },
      showsearchformbtn_style : {
         backgroundColor : "black",
@@ -44,7 +46,7 @@ const styles = {
     
      search_suggestioncontainer_style : {
         backgroundColor: "gray",
-        position: "absolute",
+        position: "fixed",
         top: "7vh",
         zIndex: 10,
         width: "80%",
@@ -83,7 +85,7 @@ const styles = {
     },
      frontimg_style : {
         width: "100%",
-        height: "30vh"
+        height: "43vh", //changed
     },
      figcaption_style_visible : {
         position: "absolute",
@@ -102,6 +104,7 @@ const styles = {
         overflow: "hidden",
         textOverflow: "ellipsis",
         paddingLeft: "2%",
+        fontSize : "1rem", //added
     },
      arttitlecontainer_style : {
         margin: "0",
@@ -113,6 +116,7 @@ const styles = {
         marginLeft: "2%",
         fontWeight: "900",
         textAlign: "center",
+        fontSize: "1.3rem",
     
     },
      pricelikebtn_container : {
@@ -164,8 +168,8 @@ const styles = {
         textTransform: "uppercase",
         border: "none",
         height: "2.1rem",
-        marginTop: ".5rem",
-        marginRight: "1.3rem",
+        marginTop: ".9rem",
+        marginRight: "4rem",
         opacity: "1",
     
     },

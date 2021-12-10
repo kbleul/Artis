@@ -145,7 +145,7 @@ function ImageList() {
                                             justifyContent: "space-between",
                                             alignItems: "flex-end",
                                             background: "-moz-linear-gradient(rgba(0,0,0,0) 55%, black)",
-                                            height: "30vh"
+                                            height: "43vh"
                                         })
                                     }}
                                     onMouseOut={() => { boxstatus[1]({ display: "none" }) }}
