@@ -45,7 +45,7 @@ const styles = {
     /*-----------------------------------------*/
     
      search_suggestioncontainer_style : {
-        backgroundColor: "gray",
+        backgroundColor: "#c8c8c8",
         position: "fixed",
         top: "7vh",
         zIndex: 10,

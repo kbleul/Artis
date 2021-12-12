@@ -15,6 +15,7 @@ const styles = {
         color: "white",
         fontWeight: "900",
         fontStyle: "cursive",
+        fontSize: "2rem",
         marginLeft: "2rem",
     },
     searchform_style: { 
@@ -87,6 +88,10 @@ const styles = {
         overflowY: "scroll",
         height : "93vh",
         marginTop: "7vh"
+    },
+    imaglist_ulstyle : {
+        maxWidth: "2000px",
+        margin: "0 auto", 
     },
     imglist_style : {
         float: "left",

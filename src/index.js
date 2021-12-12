@@ -4,6 +4,7 @@ import ReactDOM from "react-dom";
 import Mobilefrontpage from "./frontpage_mobile_version";
 import Tabfrontpage from "./frontpage_tablet_version";
 import Desktopfrontpage from "./frontpage_desktop_version";
+import LargeScreenfrontpage from "./frontpage_largeScreen_version";
 import './css/App.css';
 import { useMediaQuery } from 'react-responsive';
 
@@ -20,12 +21,17 @@ export default function App() {
     query: "(min-device-width: 769px ) and (max-device-width: 1200px)",
   })
   
+  const isLargeScreenDevice = useMediaQuery({
+    query: "(min-device-width: 1201px )",
+  })
 
 
     return (<article>
       {isMobileDevice && <Mobilefrontpage /> }
       {isTabletDevice && <Tabfrontpage />}
       {isDesktopDevice && <Desktopfrontpage />}
+      {isLargeScreenDevice && <LargeScreenfrontpage />}
+
 
       </article>)
 }

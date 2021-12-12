@@ -3,7 +3,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { BrowserRouter as Brouter, Routes, Route, Link } from "react-router-dom";
 import { useParams } from "react-router";
-import styles from "./css/desktop_version_styles";
+import styles from "./css/largescreen_version_styles";
 import img1 from "./ART/1.jpg";
 import img2 from "./ART/2.jpg";
 import img3 from "./ART/3.jpg";
@@ -12,7 +12,7 @@ import img5 from "./ART/5.jpg";
 import img6 from "./ART/6.jpg";
 
 
-export default function Desktopfrontpage() {
+export default function LargeScreenfrontpage() {
 
     return (<Brouter>
         <Routes>
@@ -151,7 +151,7 @@ function ImageList() {
     return (<><Header />
         <section id="main_container" style={styles.maincontainer_style} >
 
-            <ul className="imglist_container">
+            <ul className="imglist_container" style={styles.imaglist_ulstyle}>
                 {
                     Object.entries(arts).map(([slug, { title, artist, price, img, boxstatus }]) =>
                     <li style={styles.imglist_style} key={slug}>
