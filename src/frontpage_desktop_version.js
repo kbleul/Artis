@@ -170,35 +170,25 @@ function ViewImg() {
 
     let art = arts[slug];
 
-    const [artobj, setartobj] = useState(art);
-
-    useEffect(() => {
-        
-        set_likecounter_status(artobj.likestatus[3]);
-        setstroke(artobj.likestatus[4]);
-        
-
-    },[artobj])
-
     if (art === undefined) { art = arts[connect_metatdata.get(slug)] }
 
-    const [showcomments, setshowcomments] = useState(false);
     const [imglike_status, set_imglike_status] = useState(art.likestatus[0]);
     const [likecounter_status, set_likecounter_status] = useState(art.likestatus[3])
     const [stroke, setstroke] = useState(art.likestatus[4]);
 
     const likeDislike = () => {
-        if (imglike_status === "white") {
+        if (art.likestatus[0] === "white") {
             set_imglike_status("red");
             setstroke("red");
-            set_likecounter_status(++art.likestatus[3]);
+            ++art.likestatus[3];
             art.likestatus[0] = "red";
             art.likestatus[4] = "red";
         }
         else {
             set_imglike_status("white");
             setstroke("black");
-            set_likecounter_status(--art.likestatus[3]);
+            --art.likestatus[3];
+            set_likecounter_status(art.likestatus[3]);
             art.likestatus[0] = "white";
             art.likestatus[4] = "black";
         }
@@ -210,18 +200,18 @@ function ViewImg() {
         const [comment, setcomment] = useState("");
         const [commentfocus, set_commentfocus] = useState(false);
         //track list of comments
-        const [comments, setcomments] = useState(artobj.comments);
-        const [commnetsize, setsommentsize] = useState(artobj.commentsSize);
+        const [comments, setcomments] = useState(art.comments);
+        const [commnetsize, setsommentsize] = useState(art.commentsSize);
     
         let accountkey = Object.keys(comments);
     
         const handleSubmit = (event) => {
             event.preventDefault();
-            artobj.comments.unknown = comment;
+            art.comments.unknown = comment;
             setcomments({ unknown: comment, ...comments });
             setcomment("");
-            ++artobj.commentsSize;
-            setsommentsize(artobj.commentsSize);
+            ++art.commentsSize;
+            setsommentsize(art.commentsSize);
         }
     
         return (<section style={styles.CommentsSection} >
@@ -244,7 +234,7 @@ function ViewImg() {
                         {
                             accountkey.map((account) =>
                                 <><li style={styles.commentaccount_style} key={account}>{account}</li>
-                                    <li style={styles.commenttext_style} key={`comment${account}`}>{artobj.comments[account]}</li></>)
+                                    <li style={styles.commenttext_style} key={`comment${account}`}>{art.comments[account]}</li></>)
                         }
                     </ul>
                 </section>
@@ -274,9 +264,9 @@ function ViewImg() {
                                 onMouseOver={(e) => { e.target.style.opacity = ".5"; }} onMouseOut={(e) => { e.target.style.opacity = "1"; }}>
                                 <svg xmlns="http://www.w3.org/2000/svg"
                                     width="1.5em" height="1.5em" viewBox="0 0 48 48">
-                                    <path d="M15 8C8.925 8 4 12.925 4 19c0 11 13 21 20 23.326C31 40 44 30 44 19c0-6.075-4.925-11-11-11c-3.72 0-7.01 1.847-9 4.674A10.987 10.987 0 0 0 15 8z" fill={art.likestatus[0]} stroke={stroke} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                                    <path d="M15 8C8.925 8 4 12.925 4 19c0 11 13 21 20 23.326C31 40 44 30 44 19c0-6.075-4.925-11-11-11c-3.72 0-7.01 1.847-9 4.674A10.987 10.987 0 0 0 15 8z" fill={art.likestatus[0]} stroke={art.likestatus[4]} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" /></svg>
                             </button>
-                            <p style={styles.likecountpar_style}>{likecounter_status}</p>
+                            <p style={styles.likecountpar_style}>{art.likestatus[3]}</p>
                         </div>
                     </div>
 
@@ -288,8 +278,8 @@ function ViewImg() {
 
                 <article style={styles.bottombox_maincontainer}>
 
-                    <CommentsSection artobject={artobj} commentFunction={setshowcomments} />
-                    <SuggestionImgs artobject={art} commentFunction={setshowcomments} imgfunction={setartobj}/>
+                    <CommentsSection />
+                    <SuggestionImgs artobject={art}  />
                 </article>
             </section>
         </section></>
@@ -317,7 +307,7 @@ function SuggestionImgs(prop) {
                         <Link to={`/${slug}`}>
 
                             <li key={`${title}-${price}`}>
-                                <img style={styles.frontimg_style} src={img} alt="" onClick={()=> prop.imgfunction(arts[slug])} />
+                                <img style={styles.frontimg_style} src={img} alt=""  />
                             </li>
                         </Link>
 
