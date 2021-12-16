@@ -1,9 +1,11 @@
   const styles = {
+      currentmode : "light",
+      
     header_style: {
         display: "flex",
         height: "7vh",
         width: "100%",
-        backgroundColor: "black",
+        backgroundColor: "white",
         justifyContent: "space-detween",
         alignItems: "center",
         position: "fixed",
@@ -12,7 +14,7 @@
     },
 
     h1 : {
-        color: "white",
+        color: "black",
         fontWeight: "900",
         fontStyle: "cursive",
         width: "90%",
@@ -26,20 +28,21 @@
         height: '1.6rem',
         border: 'none',
         outline: 'none',
-        color: 'white',
+        color: 'black',
         fontWeight: 'bold',
-        borderBottom: '1px solid #fff',
-        backgroundColor: "black",
+        borderBottom: '1px solid #000',
+        backgroundColor: "white",
     },
      showsearchformbtn_style : {
-        backgroundColor : "black",
+        backgroundColor : "white",
         border : "none",
         display : "block",
     },
      searchactionbtn_style : {
-        backgroundColor : "black",
+        backgroundColor : "white",
         border: "none",
     },
+    searchfill : "black",
     /*-----------------------------------------*/
     
      search_suggestioncontainer_style : {
@@ -59,8 +62,17 @@
         paddingBottom: ".2rem",
         borderBottom: "1px solid #797474",
     },
+
+    menusectionstyle : {
+        position: "absolute",
+        top: "7.1vh",
+        left: "70%",
+        right : "2%",
+        zIndex: "9",
+        backgroundColor: "red",
+    },
     /*-----------------------------------------*/
-    
+     viewimg_container : { backgroundColor: "white" },
      halfpagecontainer_style : {
         height: "48vh",
         overflowY: "scroll",
@@ -71,7 +83,7 @@
         marginTop: "7vh",
     },
      maincontainer_style : {
-        backgroundColor: "rgb(61, 56, 56)",
+        backgroundColor: "white",
         overflowY: "scroll",
         marginTop: "7vh"
     },
@@ -113,7 +125,7 @@
         marginLeft: "2%",
         fontWeight: "900",
         textAlign: "center",
-    
+        color: "black",
     },
      pricelikebtn_container : {
         display: "flex",
@@ -122,7 +134,6 @@
         height: "7vh",
         margin: "0 auto",
         borderBottom: "1px solid #e1dbdb",
-    
     },
      pricepara_style : {
         paddingLeft: "5%",
@@ -155,6 +166,7 @@
         fontWeight: "900",
         margin: "0",
         alignSelf: "center",
+        color: "black",
     },
      buybtn_style : {
         padding: "0rem 1.6rem",
@@ -167,7 +179,6 @@
         marginTop: ".5rem",
         marginRight: "1.3rem",
         opacity: "1",
-    
     },
      accountbuy_container_style : {
         display: "flex",
@@ -178,6 +189,7 @@
         marginTop: "4.7%",
         fontSize: ".8rem",
         textDecoration: "underline",
+        color: "black",
     },
      commentbtns_container : {
         borderBottom: "1px solid grey",
@@ -201,6 +213,7 @@
         width: "50%",
         paddingLeft: "2.5%",
         textAlign: "left",
+        color:"black",
     },
      commentdropdownbtn_style : {
         backgroundColor: "rgba(0,0,0,0)",
@@ -211,6 +224,7 @@
      commentcancle_parastyle : {
         paddingLeft: "5%",
         textTransform: "Capitalize",
+        color: "black",
     },
      commentform_container_style : {
         borderBottom: "1px solid #d7d1d1",
@@ -245,7 +259,7 @@
         paddingTop: ".35rem",
     },
      suggestioncontainer_style : {
-        backgroundColor: "rgb(61, 56, 56)"
+        backgroundColor: "white",
     },
      commentaccount_style : {
         fontSize: ".7rem",

@@ -39,11 +39,21 @@ const styles = {
         backgroundColor: "black",
         border: "none",
         display: "block",
-        marginLeft: "80%",
+        marginLeft: "70%",
     },
     searchactionbtn_style: {
         backgroundColor: "black",
         border: "none",
+    },
+    menulissection_style : {
+        width : "16%",
+    },
+    menulistul_style: {
+        display: "flex",
+        justifyContent: "right",
+    },
+    menulistli_style: {
+        marginLeft: "5%",
     },
     /*-----------------------------------------*/
 
@@ -262,7 +272,6 @@ const styles = {
         marginLeft: "5%",
         border: "none",
         borderBottom: "1px solid",
-        height: "3.3rem",
         paddingTop: "3%",
         outline: "none",
     },
@@ -282,9 +291,13 @@ const styles = {
         paddingTop: ".35rem",
     },
     img_suggestioncontainer_style: {
-        height : "40vh",
+        height : "45.5vh",
         overflowY: "scroll",
-        marginTop: "3rem",
+        marginTop: "1rem",
+    },
+    suggestioncontainer_style : {
+        width: "30%",
+        marginRight: "5%",
     },
     commentaccount_style: {
         fontSize: ".7rem",

@@ -276,10 +276,11 @@ const styles = {
         textTransform: "capitalize",
         paddingTop: ".35rem",
     },
+    imgsuggestionarticle_style : { width : "40%", },
     img_suggestioncontainer_style: {
         height : "40vh",
         overflowY: "scroll",
-        marginTop: "3rem",
+        marginTop: "1rem",
     },
     commentaccount_style: {
         fontSize: ".7rem",

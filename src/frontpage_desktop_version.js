@@ -321,7 +321,7 @@ function CancleComment(prop) {
 function SuggestionImgs(prop) {
 
     return (<>
-        <article >
+        <article style={styles.imgsuggestionarticlestyle}>
 
             <section id="main_container" style={styles.img_suggestioncontainer_style} >
 

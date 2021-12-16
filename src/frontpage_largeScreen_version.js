@@ -100,6 +100,12 @@ function Header() {
                             <path d="M29 27.586l-7.552-7.552a11.018 11.018 0 1 0-1.414 1.414L27.586 29zM4 13a9 9 0 1 1 
         9 9a9.01 9.01 0 0 1-9-9z" fill={searchsvg_fill} /></svg>
                     </button>
+                    <section style={styles.menulissection_style}>
+            <ul style={styles.menulistul_style}>
+                <li style={styles.menulistli_style}><button>Dark/Light</button></li>
+                <li style={styles.menulistli_style}><button>Sign In</button></li>
+            </ul>
+        </section>
                 </>}
         </header>
         {searchfilter && <SearchSuggestion />}
@@ -321,7 +327,7 @@ function CancleComment(prop) {
 function SuggestionImgs(prop) {
 
     return (<>
-        <article >
+        <article style={styles.suggestioncontainer_style}>
 
             <section id="main_container" style={styles.img_suggestioncontainer_style} >
 
