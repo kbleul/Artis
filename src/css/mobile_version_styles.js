@@ -36,6 +36,8 @@
     searchmenubtn_container: {
         width: "17%",
         display: "flex",
+        justifyContent: "center",
+
     },
      showsearchformbtn_style : {
         backgroundColor : "white",
@@ -202,7 +204,7 @@
     },
      commentbtns_container : {
         borderBottom: "1px solid grey",
-        borderTop: "1px solid",
+        borderTop: "1px solid black",
         marginTop: "1%",
         padding: "2% 3%",
         display: "flex",

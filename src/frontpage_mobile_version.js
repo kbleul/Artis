@@ -170,7 +170,7 @@ function ImageList() {
             <Header togglestylestate={[togglestyle, set_togglestyle]} />
         </lightdarkmode_context.Provider>
 
-        <section id="main_container" style={togglestyle.maincontainer_style} >
+        <section style={togglestyle.maincontainer_style} >
 
             <ul className="imglist_container">
                 {Object.entries(arts).map(([slug, { title, artist, price, img, boxstatus }]) =>
