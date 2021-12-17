@@ -1,9 +1,10 @@
 
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, createContext, useContext } from "react";
 import { BrowserRouter as Brouter, Routes, Route, Link } from "react-router-dom";
 import { useParams } from "react-router";
 import styles from "./css/tab_version_styles";
+import darkmode_styles from "./css/tab_darkmode_styles";
 import img1 from "./ART/1.jpg";
 import img2 from "./ART/2.jpg";
 import img3 from "./ART/3.jpg";
@@ -23,17 +24,22 @@ export default function Tabfrontpage() {
 
 }
 
+const lightdarkmode_context = createContext();
+
 function Header() {
+
+    const togglestylestate = useContext(lightdarkmode_context);
 
     const [searchsvg_fill, set_searchsvg_fill] = useState("#fff");
     const [showsearchform, set_showsearchform] = useState(false);
     const [searchinput , set_searchinput ] = useState("");
     const [searchfilter , set_searchfilter] = useState([]);
+    const [showmenu, set_showmenu] = useState(false);
 
 
     function Searchinput() {
         return (<><form style={styles.searchform_style} onSubmit={handleSearch}>
-            <input autoFocus={true} key="search" style={styles.searchinput_style} type="text" list="suggestions" value={searchinput} onChange={onSearchInput}/>
+            <input autoFocus={true} key="search" style={togglestylestate[0].searchinput_style} type="text" list="suggestions" value={searchinput} onChange={onSearchInput}/>
             </form>
         </>);
     }
@@ -80,33 +86,59 @@ function Header() {
   
   }
     return (<>
-        <header id="header_wrapper" style={styles.header_style}>
+        <header id="header_wrapper" style={togglestylestate[0].header_style}>
 
-            {showsearchform ? <><Searchinput />  <Link to={`/${searchinput}`} >
-            <button onClick={searchAction} style={styles.searchactionbtn_style}>
+            {showsearchform ? <><Searchinput />  <Link style={styles.submitsearchlink_style} to={`/${searchinput}`} >
+            <button onClick={searchAction} style={togglestylestate[0].searchactionbtn_style}>
                 <svg  onMouseOver={() => { set_searchsvg_fill("red") }} onMouseOut={() => { set_searchsvg_fill("#fff") }}
 
                 xmlns="http://www.w3.org/2000/svg" width="2em" height="1.8em" viewBox="0 0 32 32">
                 <path d="M29 27.586l-7.552-7.552a11.018 11.018 0 1 0-1.414 1.414L27.586 29zM4 13a9 9 0 1 1 
-        9 9a9.01 9.01 0 0 1-9-9z" fill={searchsvg_fill} /></svg>
+        9 9a9.01 9.01 0 0 1-9-9z" fill={togglestylestate[0].searchfill} /></svg>
             </button>
     </Link></>
-                : <><h1 id="logo" style={styles.h1}>ARTis</h1>
+                : <><Link to="/"><h1 id="logo" style={togglestylestate[0].h1}>ARTis</h1></Link>
 
-               
-        <button style={styles.showsearchformbtn_style} type="submit" onClick={handleSearch}>
+           <div style={styles.searchmenubtn_container}>  
+        <button style={togglestylestate[0].showsearchformbtn_style} type="submit" onClick={handleSearch}>
             <svg  onMouseOver={() => { set_searchsvg_fill("red") }} onMouseOut={() => { set_searchsvg_fill("#fff") }}
 
                 xmlns="http://www.w3.org/2000/svg" width="2em" height="1.8em" viewBox="0 0 32 32">
                 <path d="M29 27.586l-7.552-7.552a11.018 11.018 0 1 0-1.414 1.414L27.586 29zM4 13a9 9 0 1 1 
-        9 9a9.01 9.01 0 0 1-9-9z" fill={searchsvg_fill} /></svg>
+        9 9a9.01 9.01 0 0 1-9-9z" fill={togglestylestate[0].searchfill} /></svg>
         </button>
+        <button style={togglestylestate[0].showmenubtn_style} type="submit" onClick={() => {
+            if (showmenu === true) { console.log("aa"); set_showmenu(false); }
+            else { console.log(showmenu === "false"); set_showmenu(true); }
+        }}>
+            <svg 
+                xmlns="http://www.w3.org/2000/svg" width="2em" height="1.8em" viewBox="0 0 32 32">
+                <path d="M29 27.586l-7.552-7.552a11.018 11.018 0 1 0-1.414 1.414L27.586 29zM4 13a9 9 0 1 1 
+        9 9a9.01 9.01 0 0 1-9-9z" fill={togglestylestate[0].searchfill} /></svg>
+        </button>
+        </div>  
         </>}
         </header> 
         {searchfilter && <SearchSuggestion />}
+        {showmenu && <MenuSection setshowmenu={set_showmenu} />}
+
         </>
         
         );
+}
+
+
+function MenuSection(prop) {
+    const togglestylestate = useContext(lightdarkmode_context);
+
+    return (<section style={styles.menusectionstyle}>
+        <ul>
+            <li><button onClick={() => { togglestylestate[1](darkmode_styles); styles.currentmode = "dark"; prop.setshowmenu(false) }}>Dark</button></li>
+            <li><button onClick={() => { togglestylestate[1](styles);; styles.currentmode = "light"; prop.setshowmenu(false) }}>Light</button></li>
+
+            <li><button >Sign In</button></li>
+        </ul>
+    </section>)
 }
 
 function ImageList() {
@@ -126,9 +158,18 @@ function ImageList() {
     arts.img5.boxstatus = [imgfive_boxstatus, set_imgfive_boxstatus];
     arts.img6.boxstatus = [imgsix_boxstatus, set_imgsix_boxstatus];
 
+    const [togglestyle, set_togglestyle] = useState(styles);
 
-    return (<><Header />
-        <section id="main_container" style={styles.maincontainer_style} >
+    useEffect(() => {
+        if (styles.currentmode === "dark") { set_togglestyle(darkmode_styles) }
+    }, []);
+
+
+    return (<>
+        <lightdarkmode_context.Provider value={[togglestyle, set_togglestyle]}>
+        <Header togglestylestate={[togglestyle, set_togglestyle]} />
+    </lightdarkmode_context.Provider>
+        <section id="main_container" style={togglestyle.maincontainer_style} >
 
             <ul className="imglist_container">
                 {Object.entries(arts).map(([slug, { title, artist, price, img, boxstatus }]) =>
@@ -167,6 +208,8 @@ function ImageList() {
 }
 
 function ViewImg() {
+    const [togglestyle, set_togglestyle] = useState(styles);
+
     const { slug } = useParams();
     const [showcomments, setshowcomments] = useState(false);
 
@@ -176,18 +219,31 @@ function ViewImg() {
     if(art === undefined)
     {  art = arts[connect_metatdata.get(slug)]}
 
+    useEffect(() => {
+        if (styles.currentmode === "dark") { set_togglestyle(darkmode_styles) }
+    }, []);
 
-    return (<><Header />
-        <section>
+    return (<>
+        <lightdarkmode_context.Provider value={[togglestyle, set_togglestyle]}>
+        <Header togglestylestate={[togglestyle, set_togglestyle]}/>
+        </lightdarkmode_context.Provider>
+
+        <section style={togglestyle.viewimg_container}>
           <img  style={styles.viewimg_imgstyle} src={art.img} alt="" />
 
         <section style={styles.halfpagecontainer_style}>
-            <div style={styles.arttitlecontainer_style}>
-               <p style={styles.arttitlepara_style}>{art.title} - {art.artist}</p>
+            <div style={togglestyle.arttitlecontainer_style}>
+               <p style={togglestyle.arttitlepara_style}>{art.title} - {art.artist}</p>
             </div>
 
-            {showcomments ? <CommentsSection artobject={art} commentFunction={setshowcomments} />
-                : <SuggestionImgs artobject={art} commentFunction={setshowcomments} />}
+            {showcomments ?
+                <lightdarkmode_context.Provider value={[togglestyle, set_togglestyle]}>
+                 <CommentsSection artobject={art} commentFunction={setshowcomments}  togglestylestate={[togglestyle, set_togglestyle]}/>
+                 </lightdarkmode_context.Provider>
+
+                :  <lightdarkmode_context.Provider value={[togglestyle, set_togglestyle]}>
+                <SuggestionImgs artobject={art} commentFunction={setshowcomments}  togglestylestate={[togglestyle, set_togglestyle]}/>
+            </lightdarkmode_context.Provider> }
 
         </section>
     </section></>
@@ -195,6 +251,7 @@ function ViewImg() {
 }
 
 function CommentsSection(prop) {
+    const togglestylestate = useContext(lightdarkmode_context);
 
     //track comment textarea
     const [comment, setcomment] = useState("");
@@ -213,15 +270,15 @@ function CommentsSection(prop) {
     }
 
     return (<section>
-        <div style={styles.commentcancle_containerstyle}>
-            <p style={styles.commentcancle_parastyle}>Comments</p>
+        <div style={togglestylestate[0].commentcancle_containerstyle}>
+            <p style={togglestylestate[0].commentcancle_parastyle}>Comments</p>
             <button style={styles.canclecomment_style} onClick={() => { prop.commentFunction(false) }}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="2.3em" height="2.3em" viewBox="0 0 16 16"><g fill="gray">
                     <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8L4.646 5.354a.5.5 0 0 1 0-.708z" /></g></svg>
             </button></div>
-        <div style={styles.commentform_container_style}>
+        <div style={togglestylestate[0].commentform_container_style}>
             <form onSubmit={handleSubmit}>
-                <textarea onFocus={() => set_commentfocus(true)} style={styles.commenttextarea_style} value={comment} placeholder="Add comment..." onChange={(e) => setcomment(e.target.value)}></textarea>
+                <textarea onFocus={() => set_commentfocus(true)} style={togglestylestate[0].commenttextarea_style} value={comment} placeholder="Add comment..." onChange={(e) => setcomment(e.target.value)}></textarea>
 
                 {commentfocus && <CancleComment focusFunc={set_commentfocus} emptyCommentForm_func={setcomment} />}
 
@@ -232,8 +289,8 @@ function CommentsSection(prop) {
             <ul>
                 {
                     accountkey.map((account) =>
-                        <><li style={styles.commentaccount_style} key={account}>{account}</li>
-                            <li style={styles.commenttext_style} key={`comment${account}`}>{prop.artobject.comments[account]}</li></>)
+                        <><li style={togglestylestate[0].commentaccount_style} key={account}>{account}</li>
+                            <li style={togglestylestate[0].commenttext_style} key={`comment${account}`}>{prop.artobject.comments[account]}</li></>)
                 }
             </ul>
         </section>
@@ -242,13 +299,16 @@ function CommentsSection(prop) {
 
 
 function CancleComment(prop) {
+    const togglestylestate = useContext(lightdarkmode_context);
+
     return (<div style={styles.commnetbtns_container_style}>
-        <button onClick={() => { prop.focusFunc(false); prop.emptyCommentForm_func("") }} style={styles.commentcanclebtn_style}>Cancle</button>
-        <input type="submit" style={styles.commentsubmitbtn_style} value="COMMENT" />
+        <button onClick={() => { prop.focusFunc(false); prop.emptyCommentForm_func("") }} style={togglestylestate[0].commentcanclebtn_style}>Cancle</button>
+        <input type="submit" style={togglestylestate[0].commentsubmitbtn_style} value="COMMENT" />
     </div>)
 }
 
 function SuggestionImgs(prop) {
+    const togglestylestate = useContext(lightdarkmode_context);
 
     const [art, setart] = useState(prop.artobject);
     const [imglike_status, set_imglike_status] = useState(art.likestatus[0]);
@@ -284,8 +344,8 @@ function SuggestionImgs(prop) {
     }
 
     return (<>
-        <div style={styles.pricelikebtn_container}>
-            <p style={styles.pricepara_style}>Price : {prop.artobject.price}</p>
+        <div style={togglestylestate[0].pricelikebtn_container}>
+            <p style={togglestylestate[0].pricepara_style}>Price : {prop.artobject.price}</p>
 
             <div style={styles.likebtn_container}>
                 <button style={styles.likebutton_style} onClick={() => { likeDislike(); }}
@@ -294,20 +354,20 @@ function SuggestionImgs(prop) {
                         width="1.5em" height="1.5em" viewBox="0 0 48 48">
                         <path d="M15 8C8.925 8 4 12.925 4 19c0 11 13 21 20 23.326C31 40 44 30 44 19c0-6.075-4.925-11-11-11c-3.72 0-7.01 1.847-9 4.674A10.987 10.987 0 0 0 15 8z" fill={prop.artobject.likestatus[0]} stroke={stroke} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" /></svg>
                 </button>
-                <p style={styles.likecountpar_style}>{likecounter_status}</p>
+                <p style={togglestylestate[0].likecountpar_style}>{likecounter_status}</p>
             </div>
         </div>
         <div style={styles.accountbuy_container_style}>
-            <p style={styles.accountpar_style}>{prop.artobject.account}</p>
-            <button style={styles.buybtn_style} onMouseOver={(e) => { e.target.style.opacity = ".8"; }} onMouseOut={(e) => { e.target.style.opacity = "1"; }}>Buy</button>
+            <p style={togglestylestate[0].accountpar_style}>{prop.artobject.account}</p>
+            <button style={togglestylestate[0].buybtn_style} onMouseOver={(e) => { e.target.style.opacity = ".8"; }} onMouseOut={(e) => { e.target.style.opacity = "1"; }}>Buy</button>
         </div>
-        <div style={styles.commentbtns_container}>
-            <button style={styles.commentsbtn_style} onClick={() => { prop.commentFunction(true); }}>comments  {prop.artobject.commentsSize}</button>
+        <div style={togglestylestate[0].commentbtns_container}>
+            <button style={togglestylestate[0].commentsbtn_style} onClick={() => { prop.commentFunction(true); }}>comments  {prop.artobject.commentsSize}</button>
             <button style={styles.commentdropdownbtn_style} onClick={() => { prop.commentFunction(true); }}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16">
-                    <g fill="currentColor"><path d="M2 5.56L2.413 5h11.194l.393.54L8.373 11h-.827L2 5.56z" /></g></svg></button>
+                    <g fill={togglestylestate[0].searchfill}><path d="M2 5.56L2.413 5h11.194l.393.54L8.373 11h-.827L2 5.56z" /></g></svg></button>
         </div>
-        <section id="main_container" style={styles.suggestioncontainer_style} >
+        <section id="main_container" style={togglestylestate[0].suggestioncontainer_style} >
 
             <ul>
                 {Object.entries(arts).map(([slug, { title, artist, price, img, boxstatus }]) =>

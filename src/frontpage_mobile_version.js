@@ -93,10 +93,11 @@ function Header() {
         9 9a9.01 9.01 0 0 1-9-9z" fill={togglestylestate[0].searchfill} /></svg>
                 </button>
             </Link></>
-                : <>
+                : <><Link to="/">
                     <h1 id="logo" style={togglestylestate[0].h1} onClick={() => { set_showmenu(false) }}>ARTis</h1>
+                    </Link>
 
-
+                <div style={styles.searchmenubtn_container}>
                     <button style={togglestylestate[0].showsearchformbtn_style} type="submit" onClick={handleSearch}>
                         <svg onMouseOver={() => { set_searchsvg_fill("red") }} onMouseOut={() => { set_searchsvg_fill("#fff") }}
 
@@ -104,7 +105,7 @@ function Header() {
                             <path d="M29 27.586l-7.552-7.552a11.018 11.018 0 1 0-1.414 1.414L27.586 29zM4 13a9 9 0 1 1 
         9 9a9.01 9.01 0 0 1-9-9z" fill={togglestylestate[0].searchfill} /></svg>
                     </button>
-                    <button style={togglestylestate[0].showsearchformbtn_style}
+                    <button style={togglestylestate[0].showmenubtn_style}
                         onClick={() => {
                             if (showmenu === true) { console.log("aa"); set_showmenu(false); }
                             else { console.log(showmenu === "false"); set_showmenu(true); }
@@ -115,6 +116,7 @@ function Header() {
                             <path d="M29 27.586l-7.552-7.552a11.018 11.018 0 1 0-1.414 1.414L27.586 29zM4 13a9 9 0 1 1 
 9 9a9.01 9.01 0 0 1-9-9z" fill={togglestylestate[0].searchfill} /></svg>
                     </button>
+                        </div>
                 </>}
         </header>
         {searchfilter && <SearchSuggestion />}
@@ -168,7 +170,7 @@ function ImageList() {
             <Header togglestylestate={[togglestyle, set_togglestyle]} />
         </lightdarkmode_context.Provider>
 
-        <section id="main_container" style={togglestyle.maincontainer_style} >
+        <section style={togglestyle.maincontainer_style} >
 
             <ul className="imglist_container">
                 {Object.entries(arts).map(([slug, { title, artist, price, img, boxstatus }]) =>
@@ -232,7 +234,7 @@ function ViewImg() {
             <img style={styles.viewimg_imgstyle} src={art.img} alt="" />
 
             <section style={styles.halfpagecontainer_style}>
-                <div style={styles.arttitlecontainer_style}>
+                <div style={togglestyle.arttitlecontainer_style}>
                     <p style={togglestyle.arttitlepara_style}>{art.title} - {art.artist}</p>
                 </div>
 
@@ -273,15 +275,15 @@ function CommentsSection(prop) {
     }
 
     return (<section>
-        <div style={styles.commentcancle_containerstyle}>
+        <div style={togglestylestate[0].commentcancle_containerstyle}>
             <p style={togglestylestate[0].commentcancle_parastyle}>Comments</p>
             <button style={styles.canclecomment_style} onClick={() => { prop.commentFunction(false) }}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="2.3em" height="2.3em" viewBox="0 0 16 16"><g fill="gray">
                     <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8L4.646 5.354a.5.5 0 0 1 0-.708z" /></g></svg>
             </button></div>
-        <div style={styles.commentform_container_style}>
+        <div style={togglestylestate[0].commentform_container_style}>
             <form onSubmit={handleSubmit}>
-                <textarea onFocus={() => set_commentfocus(true)} style={styles.commenttextarea_style} value={comment} placeholder="Add comment..." onChange={(e) => setcomment(e.target.value)}></textarea>
+                <textarea onFocus={() => set_commentfocus(true)} style={togglestylestate[0].commenttextarea_style} value={comment} placeholder="Add comment..." onChange={(e) => setcomment(e.target.value)}></textarea>
 
                 {commentfocus && <CancleComment focusFunc={set_commentfocus} emptyCommentForm_func={setcomment} />}
 
@@ -292,8 +294,8 @@ function CommentsSection(prop) {
             <ul>
                 {
                     accountkey.map((account) =>
-                        <><li style={styles.commentaccount_style} key={account}>{account}</li>
-                            <li style={styles.commenttext_style} key={`comment${account}`}>{prop.artobject.comments[account]}</li></>)
+                        <><li style={togglestylestate[0].commentaccount_style} key={account}>{account}</li>
+                            <li style={togglestylestate[0].commenttext_style} key={`comment${account}`}>{prop.artobject.comments[account]}</li></>)
                 }
             </ul>
         </section>
@@ -302,9 +304,11 @@ function CommentsSection(prop) {
 
 
 function CancleComment(prop) {
+    const togglestylestate = useContext(lightdarkmode_context);
+
     return (<div style={styles.commnetbtns_container_style}>
-        <button onClick={() => { prop.focusFunc(false); prop.emptyCommentForm_func("") }} style={styles.commentcanclebtn_style}>Cancle</button>
-        <input type="submit" style={styles.commentsubmitbtn_style} value="COMMENT" />
+        <button onClick={() => { prop.focusFunc(false); prop.emptyCommentForm_func("") }} style={togglestylestate[0].commentcanclebtn_style}>Cancle</button>
+        <input type="submit" style={togglestylestate[0].commentsubmitbtn_style} value="COMMENT" />
     </div>)
 }
 

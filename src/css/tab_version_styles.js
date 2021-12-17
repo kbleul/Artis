@@ -1,10 +1,12 @@
 const styles = {
+    currentmode : "light",
+
     header_style: {
         display: "flex",
         height: "7vh",
         width: "100%",
-        backgroundColor: "black",
-        justifyContent: "space-detween",
+        backgroundColor: "white",
+        justifyContent: "space-between",
         alignItems: "center",
         position: "fixed",
         top: "0",
@@ -12,14 +14,30 @@ const styles = {
     },
 
     h1 : {
-        color: "white",
+        color: "black",
         fontWeight: "900",
         fontStyle: "cursive",
         width: "90%",
-        paddingLeft: "2%",
+        paddingLeft: "15%",
         fontSize: "2rem",//adedd
     },
-     searchform_style : { width : "90%", },
+    menusectionstyle : {
+        position: "fixed",
+        top: "7.1vh",
+        left: "70%",
+        right : "2%",
+        zIndex: "9",
+        backgroundColor: "red",
+    },
+    submitsearchlink_style : {
+        marginRight: "4%",
+    },
+     searchform_style : { width : "100%", },
+     searchmenubtn_container: {
+        width: "17%",
+        display: "flex",
+        justifyContent: "center",
+    },
      searchinput_style : {
         marginRight: "4%",
         marginLeft: "2%",
@@ -27,21 +45,23 @@ const styles = {
         height: '1.6rem',
         border: 'none',
         outline: 'none',
-        color: 'white',
+        color: 'black',
         fontWeight: 'bold',
-        borderBottom: '1px solid #fff',
-        backgroundColor: "black",
+        borderBottom: '1px solid #000',
+        backgroundColor: "white",
         fontSize : "1.1rem", //added
     },
      showsearchformbtn_style : {
-        backgroundColor : "black",
+        backgroundColor : "white",
         border : "none",
         display : "block",
     },
      searchactionbtn_style : {
-        backgroundColor : "black",
+        backgroundColor : "white",
         border: "none",
     },
+    searchfill : "black",
+
     /*-----------------------------------------*/
     
      search_suggestioncontainer_style : {
@@ -62,6 +82,7 @@ const styles = {
         borderBottom: "1px solid #797474",
     },
     /*-----------------------------------------*/
+    viewimg_container : { backgroundColor: "white" },
     
      halfpagecontainer_style : {
         height: "48vh",
@@ -72,8 +93,13 @@ const styles = {
         height: "65vh",
         marginTop: "7vh",
     },
+    showmenubtn_style : {
+        backgroundColor : "white",
+        border : "none",
+        display : "block",
+    },
      maincontainer_style : {
-        backgroundColor: "rgb(61, 56, 56)",
+        backgroundColor: "white",
         overflowY: "scroll",
         marginTop: "7vh"
     },
@@ -108,7 +134,7 @@ const styles = {
     },
      arttitlecontainer_style : {
         margin: "0",
-        borderBottom: "1px solid",
+        borderBottom: "1px solid black",
     },
      arttitlepara_style : {
         margin: "0",
@@ -117,7 +143,7 @@ const styles = {
         fontWeight: "900",
         textAlign: "center",
         fontSize: "1.3rem",
-    
+        color: "black",
     },
      pricelikebtn_container : {
         display: "flex",
@@ -126,7 +152,6 @@ const styles = {
         height: "7vh",
         margin: "0 auto",
         borderBottom: "1px solid #e1dbdb",
-    
     },
      pricepara_style : {
         paddingLeft: "5%",
@@ -134,7 +159,6 @@ const styles = {
         fontWeight: "900",
         color: "purple",
         width: "60%",
-    
     },
      likebtn_container : {
         display: "flex",
@@ -159,6 +183,7 @@ const styles = {
         fontWeight: "900",
         margin: "0",
         alignSelf: "center",
+        color: "black",
     },
      buybtn_style : {
         padding: "0rem 1.6rem",
@@ -182,10 +207,11 @@ const styles = {
         marginTop: "4.7%",
         fontSize: ".8rem",
         textDecoration: "underline",
+        color: "black",
     },
      commentbtns_container : {
         borderBottom: "1px solid grey",
-        borderTop: "1px solid",
+        borderTop: "1px solid black",
         marginTop: "1%",
         padding: "2% 3%",
         display: "flex",
@@ -195,7 +221,6 @@ const styles = {
         justifyContent: "space-between",
         alignItems: "center",
         borderBottom: "1px solid #e1dbdb",
-    
     },
      commentsbtn_style : {
         backgroundColor: "rgba(0,0,0,0)",
@@ -205,6 +230,7 @@ const styles = {
         width: "50%",
         paddingLeft: "2.5%",
         textAlign: "left",
+        color:"black",
     },
      commentdropdownbtn_style : {
         backgroundColor: "rgba(0,0,0,0)",
@@ -215,6 +241,7 @@ const styles = {
      commentcancle_parastyle : {
         paddingLeft: "5%",
         textTransform: "Capitalize",
+        color:"black",
     },
      commentform_container_style : {
         borderBottom: "1px solid #d7d1d1",
@@ -228,7 +255,7 @@ const styles = {
         width: "90%",
         marginLeft: "5%",
         border: "none",
-        borderBottom: "1px solid",
+        borderBottom: "1px solid black",
         height: "3.3rem",
         paddingTop: "5%",
         outline: "none",
@@ -249,7 +276,7 @@ const styles = {
         paddingTop: ".35rem",
     },
      suggestioncontainer_style : {
-        backgroundColor: "rgb(61, 56, 56)"
+        backgroundColor: "white"
     },
      commentaccount_style : {
         fontSize: ".7rem",
@@ -265,7 +292,7 @@ const styles = {
         paddingBottom: ".5rem",
         borderBottom: "1px solid #d7d1d1",
     },
-
+  
 
 }
 
