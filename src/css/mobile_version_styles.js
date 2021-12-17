@@ -6,7 +6,7 @@
         height: "7vh",
         width: "100%",
         backgroundColor: "white",
-        justifyContent: "space-detween",
+        justifyContent: "space-between",
         alignItems: "center",
         position: "fixed",
         top: "0",
@@ -18,7 +18,7 @@
         fontWeight: "900",
         fontStyle: "cursive",
         width: "90%",
-        paddingLeft: "2%"
+        paddingLeft: "10%"
     },
      searchform_style : { width : "90%", },
      searchinput_style : {
@@ -33,7 +33,16 @@
         borderBottom: '1px solid #000',
         backgroundColor: "white",
     },
+    searchmenubtn_container: {
+        width: "17%",
+        display: "flex",
+    },
      showsearchformbtn_style : {
+        backgroundColor : "white",
+        border : "none",
+        display : "block",
+    },
+    showmenubtn_style : {
         backgroundColor : "white",
         border : "none",
         display : "block",
@@ -64,7 +73,7 @@
     },
 
     menusectionstyle : {
-        position: "absolute",
+        position: "fixed",
         top: "7.1vh",
         left: "70%",
         right : "2%",
@@ -117,7 +126,7 @@
     },
      arttitlecontainer_style : {
         margin: "0",
-        borderBottom: "1px solid",
+        borderBottom: "1px solid black",
     },
      arttitlepara_style : {
         margin: "0",
@@ -238,7 +247,7 @@
         width: "90%",
         marginLeft: "5%",
         border: "none",
-        borderBottom: "1px solid",
+        borderBottom: "1px solid black",
         height: "3.3rem",
         paddingTop: "5%",
         outline: "none",

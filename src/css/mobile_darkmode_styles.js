@@ -15,7 +15,7 @@ const darkmode_styles = {
         fontWeight: "900",
         fontStyle: "cursive",
         width: "90%",
-        paddingLeft: "2%"
+        paddingLeft: "10%"
     },
     searchinput_style : {
         marginRight: "4%",
@@ -38,6 +38,11 @@ const darkmode_styles = {
         border : "none",
         display : "block",
     },
+    showmenubtn_style : {
+        backgroundColor : "black",
+        border : "none",
+        display : "block",
+    },
     maincontainer_style : {
         backgroundColor: "rgb(61, 56, 56)",
         overflowY: "scroll",
@@ -47,6 +52,10 @@ const darkmode_styles = {
     suggestioncontainer_style : { backgroundColor: "rgb(61, 56, 56)"   },
 
     viewimg_container : { backgroundColor: "#373737"},
+     arttitlecontainer_style : {
+        margin: "0",
+        borderBottom: "1px solid gray",
+    },
     arttitlepara_style : {
         margin: "0",
         fontFamily: "cursive",
@@ -80,7 +89,7 @@ const darkmode_styles = {
         alignItems: "center",
         height: "7vh",
         margin: "0 auto",
-        borderBottom: "1px solid #979696",
+        borderBottom: "1px solid rgb(85, 85, 85)",
         
     },
     accountpar_style : {
@@ -92,7 +101,7 @@ const darkmode_styles = {
     },
     commentbtns_container : {
         borderBottom: "1px solid" ,
-        borderTop: "1px solid #979696",
+        borderTop: "1px solid rgb(85, 85, 85)",
         marginTop: "1%",
         padding: "2% 3%",
         display: "flex",
@@ -118,6 +127,58 @@ const darkmode_styles = {
         marginTop: ".5rem",
         marginRight: "1.3rem",
         opacity: "1",
+    },
+    commentform_container_style : {
+        borderBottom: "1px solid rgb(85, 83, 83)",
+        paddingBottom: "1.7rem",
+    },
+    commenttextarea_style : {
+        width: "90%",
+        marginLeft: "5%",
+        border: "none",
+        borderBottom:"1px solid gray",
+        height: "3.3rem",
+        paddingTop: "5%",
+        outline: "none",
+        color: "white",
+        backgroundColor: "rgb(55, 55, 55)",
+    },
+    commentcancle_containerstyle : {
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        borderBottom: "1px solid rgb(85, 83, 83)",
+    },
+    commentcanclebtn_style : {
+        backgroundColor: "inherit",
+        fontSize: ".8rem",
+        border: "none",
+        textTransform: "uppercase",
+        paddingTop: ".35rem",
+        color: "white",
+    },
+    commentsubmitbtn_style : {
+        backgroundColor: "inherit",
+        fontSize: ".8rem",
+        border: "none",
+        color: "yellow",
+        textTransform: "capitalize",
+        paddingTop: ".35rem",
+    },
+    commentaccount_style : {
+        fontSize: ".7rem",
+        color: "darkgray",
+        paddingLeft: "2%",
+        paddingTop: "1%",
+    },
+    commenttext_style : {
+        fontSize: ".8rem",
+        paddingLeft: "5%",
+        paddingRight: "3%",
+        marginTop: ".3rem",
+        paddingBottom: ".5rem",
+        borderBottom: "1px solid  rgb(85, 83, 83)",
+        color: "white",
     },
 
 
