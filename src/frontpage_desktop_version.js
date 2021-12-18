@@ -190,7 +190,7 @@ function ImageList() {
         <lightdarkmode_context.Provider value={[togglestyle, set_togglestyle]}>
             <Header togglestylestate={[togglestyle, set_togglestyle]} />
         </lightdarkmode_context.Provider>
-        <section id="main_container" style={styles.maincontainer_style} >
+        <section id="main_container" style={togglestyle.maincontainer_style} >
 
             <ul className="imglist_container">
                 {
@@ -287,14 +287,14 @@ function ViewImg() {
         }
 
         return (<section style={styles.CommentsSection} >
-            <div style={styles.commentcancle_containerstyle}>
-                <p style={styles.commentcancle_parastyle}>Comments  {commnetsize}</p>
+            <div style={togglestyle.commentcancle_containerstyle}>
+                <p style={togglestyle.commentcancle_parastyle}>Comments  {commnetsize}</p>
             </div>
 
             <section  >
                 <div style={styles.commentform_container_style}>
                     <form onSubmit={handleSubmit}>
-                        <textarea onFocus={() => set_commentfocus(true)} style={styles.commenttextarea_style} value={comment} placeholder="Add comment..." onChange={(e) => setcomment(e.target.value)}></textarea>
+                        <textarea onFocus={() => set_commentfocus(true)} style={togglestyle.commenttextarea_style} value={comment} placeholder="Add comment..." onChange={(e) => setcomment(e.target.value)}></textarea>
 
                         {commentfocus && <CancleComment focusFunc={set_commentfocus} emptyCommentForm_func={setcomment} />}
 
@@ -306,7 +306,7 @@ function ViewImg() {
                         {
                             accountkey.map((account) =>
                                 <><li style={styles.commentaccount_style} key={account}>{account}</li>
-                                    <li style={styles.commenttext_style} key={`comment${account}`}>{art.comments[account]}</li></>)
+                                    <li style={togglestyle.commenttext_style} key={`comment${account}`}>{art.comments[account]}</li></>)
                         }
                     </ul>
                 </section>
@@ -322,17 +322,17 @@ function ViewImg() {
         <Header togglestylestate={[togglestyle, set_togglestyle]} />
     </lightdarkmode_context.Provider>
 
-        <section >
-            <div style={togglestyle[0].viewimg_containerstyle} >
+        <section style={togglestyle.halfpagecontainer_style}>
+            <div style={togglestyle.viewimg_containerstyle} >
                 <img style={styles.viewimg_imgstyle} src={art.img} alt="" />
             </div>
-            <section style={styles.halfpagecontainer_style}>
-                <div style={styles.arttitlecontainer_style}>
-                    <p style={styles.arttitlepara_style}>{art.title} - {art.artist}</p>
+            <section >
+                <div style={togglestyle.arttitlecontainer_style}>
+                    <p style={togglestyle.arttitlepara_style}>{art.title} - {art.artist}</p>
                 </div>
                 <section>
-                    <div style={styles.pricelikebtn_container}>
-                        <p style={styles.pricepara_style}>Price : {art.price}</p>
+                    <div style={togglestyle.pricelikebtn_container}>
+                        <p style={togglestyle.pricepara_style}>Price : {art.price}</p>
 
 
                         <div style={styles.likebtn_container}>
@@ -342,19 +342,21 @@ function ViewImg() {
                                     width="1.5em" height="1.5em" viewBox="0 0 48 48">
                                     <path d="M15 8C8.925 8 4 12.925 4 19c0 11 13 21 20 23.326C31 40 44 30 44 19c0-6.075-4.925-11-11-11c-3.72 0-7.01 1.847-9 4.674A10.987 10.987 0 0 0 15 8z" fill={art.likestatus[0]} stroke={art.likestatus[4]} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" /></svg>
                             </button>
-                            <p style={styles.likecountpar_style}>{art.likestatus[3]}</p>
+                            <p style={togglestyle.likecountpar_style}>{art.likestatus[3]}</p>
                         </div>
                     </div>
 
                     <div style={styles.accountbuy_container_style}>
-                        <p style={styles.accountpar_style}>{art.account}</p>
-                        <button style={styles.buybtn_style} onMouseOver={(e) => { e.target.style.opacity = ".8"; }} onMouseOut={(e) => { e.target.style.opacity = "1"; }}>Buy</button>
+                        <p style={togglestyle.accountpar_style}>{art.account}</p>
+                        <button style={togglestyle.buybtn_style} onMouseOver={(e) => { e.target.style.opacity = ".8"; }} onMouseOut={(e) => { e.target.style.opacity = "1"; }}>Buy</button>
                     </div>
                 </section>
 
                 <article style={styles.bottombox_maincontainer}>
 
-                    <CommentsSection />
+                <lightdarkmode_context.Provider value={[togglestyle, set_togglestyle]}>
+                <CommentsSection artobject={art} togglestylestate={[togglestyle, set_togglestyle]} />
+                </lightdarkmode_context.Provider>
                     <SuggestionImgs artobject={art} />
                 </article>
             </section>
@@ -368,8 +370,8 @@ function CancleComment(prop) {
     const togglestylestate = useContext(lightdarkmode_context);
 
     return (<div style={styles.commnetbtns_container_style}>
-        <button onClick={() => { prop.focusFunc(false); prop.emptyCommentForm_func("") }} style={styles.commentcanclebtn_style}>Cancle</button>
-        <input type="submit" style={styles.commentsubmitbtn_style} value="COMMENT" />
+        <button style={togglestylestate[0].commentcanclebtn_style} onClick={() => { prop.focusFunc(false); prop.emptyCommentForm_func("") }} >Cancle</button>
+        <input type="submit" style={togglestylestate[0].commentsubmitbtn_style} value="COMMENT" />
     </div>)
 }
 

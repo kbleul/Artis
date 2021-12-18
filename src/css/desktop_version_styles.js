@@ -81,12 +81,12 @@ const styles = {
     /*-----------------------------------------*/
 
     halfpagecontainer_style: {
-        height: "48vh",
+        backgroundColor: "white",
     },
 
     viewimg_containerstyle: {
         // backgroundColor: "#403939",  //removed
-        background: "linear-gradient(white,yellow)",//added
+        background: "linear-gradient(white,#f4d1d1)",//added
         marginBottom: ".5rem", //changed
     },
 
@@ -98,7 +98,7 @@ const styles = {
         marginLeft: "10%", //changed
     },
     maincontainer_style: {
-        background: "linear-gradient(black,grey,black)",
+        background: "linear-gradient(#fff, rgb(255, 184, 184), rgb(215, 213, 213))",
         overflowY: "scroll",
         height : "93vh",
         marginTop: "7vh"
@@ -150,7 +150,7 @@ const styles = {
         fontWeight: "900",
         textAlign: "center",
         fontSize: "1.3rem",
-
+        color: "black",
     },
     //added
     bottombox_maincontainer: {
@@ -165,7 +165,6 @@ const styles = {
         height: "7vh",
         margin: "0 auto",
         borderBottom: "1px solid #e1dbdb",
-
     },
     pricepara_style: {
         paddingLeft: "5%",
@@ -173,7 +172,6 @@ const styles = {
         fontWeight: "900",
         color: "purple",
         width: "60%",
-
     },
     likebtn_container: {
         display: "flex",
@@ -198,6 +196,7 @@ const styles = {
         fontWeight: "900",
         margin: "0",
         alignSelf: "center",
+        color: "black",
     },
     buybtn_style: {
         padding: "0rem 1.6rem",
@@ -210,7 +209,6 @@ const styles = {
         marginTop: ".5rem",//changed
         marginRight: "15%",//changed
         opacity: "1",
-
     },
     accountbuy_container_style: {
         display: "flex",
@@ -221,6 +219,7 @@ const styles = {
         marginLeft: "5.5%",
         fontSize: ".9rem",
         textDecoration: "underline",
+        color: "black",
         //margintop removed
     },
     CommentsSection : {
@@ -236,9 +235,8 @@ const styles = {
         display: "flex",
     },
     commentcancle_containerstyle: {
-
+        color:"black",
         borderBottom: "1px solid #e1dbdb",
-
     },
     commentsbtn_style: {
         backgroundColor: "rgba(0,0,0,0)",
@@ -258,6 +256,7 @@ const styles = {
     commentcancle_parastyle: {
         paddingLeft: "5%",
         textTransform: "Capitalize",
+        color: "black",
     },
     commentform_container_style: {
         borderBottom: "1px solid #d7d1d1",
@@ -271,10 +270,12 @@ const styles = {
         width: "90%",
         marginLeft: "5%",
         border: "none",
-        borderBottom: "1px solid",
+        borderBottom: "1px solid black",
         height: "3.3rem",
-        paddingTop: "3%",
+        paddingTop: "5%",
         outline: "none",
+        backgroundColor: "inherit",
+        color: "black",
     },
     commentcanclebtn_style: {
         backgroundColor: "inherit",
@@ -282,6 +283,7 @@ const styles = {
         border: "none",
         textTransform: "uppercase",
         paddingTop: ".35rem",
+        color: "black,"
     },
     commentsubmitbtn_style: {
         backgroundColor: "inherit",
@@ -293,7 +295,7 @@ const styles = {
     },
     imgsuggestionarticle_style : { width : "40%", },
     img_suggestioncontainer_style: {
-        height : "40vh",
+        height : "45.5vh",
         overflowY: "scroll",
         marginTop: "1rem",
     },
@@ -310,6 +312,7 @@ const styles = {
         marginTop: ".3rem",
         paddingBottom: ".5rem",
         borderBottom: "1px solid #d7d1d1",
+        color:"black"
     },
 
 
