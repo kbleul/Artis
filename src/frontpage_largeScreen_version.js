@@ -33,7 +33,7 @@ function Header() {
 
     function Searchinput() {
         return (<><form style={styles.searchform_style} onSubmit={handleSearch}>
-            <input autoFocus={true} key="search" style={styles.searchinput_style} type="text" list="suggestions" value={searchinput} onChange={onSearchInput} />
+            <input autoFocus={true} key="search" style={styles.searchinput_style} type="text" list="suggestions" value={searchinput} placeholder="Search..." onChange={onSearchInput} />
         </form>
         </>);
     }

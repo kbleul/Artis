@@ -29,6 +29,10 @@ const styles = {
         backgroundColor: "inherit",
         border: "none",
     },
+    searchformcontainer_style : {
+        display: "flex",
+        alignItems: "flex-end",
+    },
     searchform_style: { 
         width: "60%",
         marginLeft : "15%", 
@@ -36,15 +40,16 @@ const styles = {
     searchinput_style: {
         marginRight: "4%",
         marginLeft: "2%",
+        marginTop: "1rem",
         width: "95%",
         height: '1.6rem',
         border: 'none',
         outline: 'none',
-        color: 'white',
+        color: 'black',
         fontWeight: 'bold',
-        fontSize: "1.2rem",
-        borderBottom: '1px solid #fff',
-        backgroundColor: "black",
+        fontSize: "1rem",
+        borderBottom: '1px solid black',
+        backgroundColor: "inherit",
     },
     showsearchformbtn_style: {
         backgroundColor: "white",
@@ -54,7 +59,7 @@ const styles = {
         height : "8vh",
     },
     searchactionbtn_style: {
-        backgroundColor: "black",
+        backgroundColor: "white",
         border: "none",
     },
     searchfill : "black",

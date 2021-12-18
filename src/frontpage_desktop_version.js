@@ -36,7 +36,7 @@ function Header() {
 
     function Searchinput() {
         return (<><form style={styles.searchform_style} onSubmit={handleSearch}>
-            <input autoFocus={true} key="search" style={styles.searchinput_style} type="text" list="suggestions" value={searchinput} onChange={onSearchInput} />
+            <input autoFocus={true} key="search" style={togglestylestate[0].searchinput_style} type="text" list="suggestions" value={searchinput} onChange={onSearchInput} placeholder="Search..."/>
         </form>
         </>);
     }
@@ -83,15 +83,18 @@ function Header() {
     return (<>
         <header id="header_wrapper" style={togglestylestate[0].header_style}>
 
-            {showsearchform ? <><Searchinput />  <Link to={`/${searchinput}`} >
-                <button onClick={searchAction} style={styles.searchactionbtn_style}>
+            {showsearchform ? 
+                <section style={styles.searchformcontainer_style}>
+                <Searchinput />  
+                <Link to={`/${searchinput}`} >
+                <button onClick={searchAction} style={togglestylestate[0].searchactionbtn_style}>
                     <svg onMouseOver={() => { set_searchsvg_fill("red") }} onMouseOut={() => { set_searchsvg_fill("#fff") }}
 
                         xmlns="http://www.w3.org/2000/svg" width="2em" height="1.8em" viewBox="0 0 32 32">
                         <path d="M29 27.586l-7.552-7.552a11.018 11.018 0 1 0-1.414 1.414L27.586 29zM4 13a9 9 0 1 1 
-        9 9a9.01 9.01 0 0 1-9-9z" fill={styles.searchfill} /></svg>
+        9 9a9.01 9.01 0 0 1-9-9z" fill={togglestylestate[0].searchfill} /></svg>
                 </button>
-            </Link></>
+            </Link></section>
                 : <><section style={styles.headerbtnscontainers_style}>
                     <Link to="/"><h1 id="logo" style={togglestylestate[0].h1}>ARTis</h1></Link>
                     <section style={styles.leftbtnscontainer_style}>
