@@ -1,21 +1,33 @@
 const styles = {
     header_style: {
-        display: "flex",
-        height: "7vh",
+        height: "8vh",
         width: "100%",
-        backgroundColor: "black",
-        justifyContent: "space-detween",
-        alignItems: "center",
+        backgroundColor: "white",
         position: "fixed",
         top: "0",
         zIndex: "10",
     },
 
     h1: {
-        color: "white",
+        color: "black",
         fontWeight: "900",
         fontStyle: "cursive",
-        marginLeft: "2rem",
+        fontSize: "2rem",
+        margin: "0",
+        marginLeft: "25%",
+        paddingTop: "6%",
+    },
+    headerbtnscontainers_style : {
+        display: "flex",
+        justifyContent: "space-between",
+    },
+    leftbtnscontainer_style : {
+        display: "flex",
+        justifyContent: "right",
+    },
+    leftbtns_style : {
+        backgroundColor: "inherit",
+        border: "none",
     },
     searchform_style: { 
         width: "60%",
@@ -35,15 +47,18 @@ const styles = {
         backgroundColor: "black",
     },
     showsearchformbtn_style: {
-        backgroundColor: "black",
+        backgroundColor: "white",
         border: "none",
         display: "block",
         marginLeft: "80%",
+        height : "8vh",
     },
     searchactionbtn_style: {
         backgroundColor: "black",
         border: "none",
     },
+    searchfill : "black",
+
     /*-----------------------------------------*/
 
     search_suggestioncontainer_style: {
@@ -71,7 +86,7 @@ const styles = {
 
     viewimg_containerstyle: {
         // backgroundColor: "#403939",  //removed
-        background: "linear-gradient(black,grey)",//added
+        background: "linear-gradient(white,yellow)",//added
         marginBottom: ".5rem", //changed
     },
 

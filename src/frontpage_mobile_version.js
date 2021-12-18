@@ -84,7 +84,7 @@ function Header() {
     return (<>
         <header id="header_wrapper" style={togglestylestate[0].header_style}>
 
-            {showsearchform ? <><Searchinput />  <Link style={styles.submitsearchlink_style}  to={`/${searchinput}`} >
+            {showsearchform ? <><Searchinput />  <Link style={styles.submitsearchlink_style} to={`/${searchinput}`} >
                 <button onClick={searchAction} style={togglestylestate[0].searchactionbtn_style}>
                     <svg onMouseOver={() => { set_searchsvg_fill("red") }} onMouseOut={() => { set_searchsvg_fill("#fff") }}
 
@@ -95,26 +95,26 @@ function Header() {
             </Link></>
                 : <><Link to="/">
                     <h1 id="logo" style={togglestylestate[0].h1} onClick={() => { set_showmenu(false) }}>ARTis</h1>
-                    </Link>
+                </Link>
 
-                <div style={styles.searchmenubtn_container}>
-                    <button style={togglestylestate[0].showsearchformbtn_style} type="submit" onClick={handleSearch}>
-                        <svg onMouseOver={() => { set_searchsvg_fill("red") }} onMouseOut={() => { set_searchsvg_fill("#fff") }}
+                    <div style={styles.searchmenubtn_container}>
+                        <button style={togglestylestate[0].showsearchformbtn_style} type="submit" onClick={handleSearch}>
+                            <svg onMouseOver={() => { set_searchsvg_fill("red") }} onMouseOut={() => { set_searchsvg_fill("#fff") }}
 
-                            xmlns="http://www.w3.org/2000/svg" width="2em" height="1.8em" viewBox="0 0 32 32">
-                            <path d="M29 27.586l-7.552-7.552a11.018 11.018 0 1 0-1.414 1.414L27.586 29zM4 13a9 9 0 1 1 
+                                xmlns="http://www.w3.org/2000/svg" width="2em" height="1.8em" viewBox="0 0 32 32">
+                                <path d="M29 27.586l-7.552-7.552a11.018 11.018 0 1 0-1.414 1.414L27.586 29zM4 13a9 9 0 1 1 
         9 9a9.01 9.01 0 0 1-9-9z" fill={togglestylestate[0].searchfill} /></svg>
-                    </button>
-                    <button style={togglestylestate[0].showmenubtn_style}
-                        onClick={() => {
-                            if (showmenu === true) { console.log("aa"); set_showmenu(false); }
-                            else { console.log(showmenu === "false"); set_showmenu(true); }
-                        }}>
-                        <svg xmlns="http://www.w3.org/2000/svg" 
-                         width="2.1em" height="3.5em" viewBox="0 0 48 48"><g fill={togglestylestate[0].searchfill} ><path d="M6 22h36v4H6z"/><path d="M6 10h36v4H6z"/><path d="M6 34h36v4H6z"/></g></svg>
-                  
-                    </button>
-                        </div>
+                        </button>
+                        <button style={togglestylestate[0].showmenubtn_style}
+                            onClick={() => {
+                                if (showmenu === true) { console.log("aa"); set_showmenu(false); }
+                                else { console.log(showmenu === "false"); set_showmenu(true); }
+                            }}>
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                width="2.1em" height="3.5em" viewBox="0 0 48 48"><g fill={togglestylestate[0].searchfill} ><path d="M6 22h36v4H6z" /><path d="M6 10h36v4H6z" /><path d="M6 34h36v4H6z" /></g></svg>
+
+                        </button>
+                    </div>
                 </>}
         </header>
         {searchfilter && <SearchSuggestion />}
@@ -129,24 +129,24 @@ function Header() {
 function MenuSection(prop) {
     const togglestylestate = useContext(lightdarkmode_context);
 
-    const[ lightmode, set_lightmode] = useState(true);
+    const [lightmode, set_lightmode] = useState(true);
 
-    useEffect(()=>{
-        if(styles.currentmode === "dark") { set_lightmode(false)}
-    },[]);
+    useEffect(() => {
+        if (styles.currentmode === "dark") { set_lightmode(false) }
+    }, []);
 
     return (<section style={togglestylestate[0].menusectionstyle}>
         <ul>
-      {
-           lightmode ?  <li><button style={styles.theamtoggle_style} onClick={() => { togglestylestate[1](darkmode_styles); styles.currentmode = "dark"; prop.setshowmenu(false); set_lightmode(false) }}>
-            <svg xmlns="http://www.w3.org/2000/svg"width="3.5em" height="2.5em"   viewBox="0 0 48 48"><g fill="none"><path d="M9.5 24a5 5 0 1 1 10 0a5 5 0 0 1-10 0z" fill="currentColor"/><path d="M4 24c0-5.523 4.477-10 10-10h20c5.523 0 10 4.477 10 10s-4.477 10-10 10H14C8.477 34 4 29.523 4 24zm10-7.5a7.5 7.5 0 0 0 0 15h20a7.5 7.5 0 0 0 0-15H14z" fill="currentColor"/></g></svg>
-            </button></li>  :
+            {
+                lightmode ? <li><button style={styles.theamtoggle_style} onClick={() => { togglestylestate[1](darkmode_styles); styles.currentmode = "dark"; prop.setshowmenu(false); set_lightmode(false) }}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="3.5em" height="2.5em" viewBox="0 0 48 48"><g fill="none"><path d="M9.5 24a5 5 0 1 1 10 0a5 5 0 0 1-10 0z" fill="currentColor" /><path d="M4 24c0-5.523 4.477-10 10-10h20c5.523 0 10 4.477 10 10s-4.477 10-10 10H14C8.477 34 4 29.523 4 24zm10-7.5a7.5 7.5 0 0 0 0 15h20a7.5 7.5 0 0 0 0-15H14z" fill="currentColor" /></g></svg>
+                </button></li> :
 
-        
-            <li><button style={styles.theamtoggle_style} onClick={() => { togglestylestate[1](styles); styles.currentmode = "light"; prop.setshowmenu(false); set_lightmode(true)}}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="3.5em" height="2.5em"  viewBox="0 0 48 48"><g fill="none"><path d="M44 24c0-5.523-4.477-10-10-10H14C8.477 14 4 18.477 4 24s4.477 10 10 10h20c5.523 0 10-4.477 10-10zm-5.5 0a5 5 0 1 1-10 0a5 5 0 0 1 10 0z" fill="currentColor"/></g></svg>
-          </button></li>
-        }
+
+                    <li><button style={styles.theamtoggle_style} onClick={() => { togglestylestate[1](styles); styles.currentmode = "light"; prop.setshowmenu(false); set_lightmode(true) }}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="3.5em" height="2.5em" viewBox="0 0 48 48"><g fill="none"><path d="M44 24c0-5.523-4.477-10-10-10H14C8.477 14 4 18.477 4 24s4.477 10 10 10h20c5.523 0 10-4.477 10-10zm-5.5 0a5 5 0 1 1-10 0a5 5 0 0 1 10 0z" fill="currentColor" /></g></svg>
+                    </button></li>
+            }
             <li><button style={styles.signinbtn_style}>Sign In</button></li>
         </ul>
     </section>)
@@ -256,7 +256,7 @@ function ViewImg() {
 
                     :
                     <lightdarkmode_context.Provider value={[togglestyle, set_togglestyle]}>
-                        <SuggestionImgs artobject={art} commentFunction={setshowcomments} style={togglestyle} togglestylestate={[togglestyle, set_togglestyle]}/>
+                        <SuggestionImgs artobject={art} commentFunction={setshowcomments} style={togglestyle} togglestylestate={[togglestyle, set_togglestyle]} />
                     </lightdarkmode_context.Provider>
                 }
 

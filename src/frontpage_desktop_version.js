@@ -1,9 +1,10 @@
 
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, createContext, useContext } from "react";
 import { BrowserRouter as Brouter, Routes, Route, Link } from "react-router-dom";
 import { useParams } from "react-router";
 import styles from "./css/desktop_version_styles";
+import darkmode_styles from "./css/desktop_darkmode_styles";
 import img1 from "./ART/1.jpg";
 import img2 from "./ART/2.jpg";
 import img3 from "./ART/3.jpg";
@@ -11,6 +12,7 @@ import img4 from "./ART/4.jpg";
 import img5 from "./ART/5.jpg";
 import img6 from "./ART/6.jpg";
 
+const lightdarkmode_context = createContext();
 
 export default function Desktopfrontpage() {
 
@@ -24,6 +26,7 @@ export default function Desktopfrontpage() {
 }
 
 function Header() {
+    const togglestylestate = useContext(lightdarkmode_context);
 
     const [searchsvg_fill, set_searchsvg_fill] = useState("#fff");
     const [showsearchform, set_showsearchform] = useState(false);
@@ -48,7 +51,6 @@ function Header() {
             arts_metadata.filter(val => {
 
                 if (val.toLowerCase().includes(e.target.value.toLowerCase())) { set_searchfilter(filter => [...filter, val]) }
-
             })
         }
     }
@@ -79,7 +81,7 @@ function Header() {
 
     }
     return (<>
-        <header id="header_wrapper" style={styles.header_style}>
+        <header id="header_wrapper" style={togglestylestate[0].header_style}>
 
             {showsearchform ? <><Searchinput />  <Link to={`/${searchinput}`} >
                 <button onClick={searchAction} style={styles.searchactionbtn_style}>
@@ -87,25 +89,56 @@ function Header() {
 
                         xmlns="http://www.w3.org/2000/svg" width="2em" height="1.8em" viewBox="0 0 32 32">
                         <path d="M29 27.586l-7.552-7.552a11.018 11.018 0 1 0-1.414 1.414L27.586 29zM4 13a9 9 0 1 1 
-        9 9a9.01 9.01 0 0 1-9-9z" fill={searchsvg_fill} /></svg>
+        9 9a9.01 9.01 0 0 1-9-9z" fill={styles.searchfill} /></svg>
                 </button>
             </Link></>
-                : <><Link to="/"><h1 id="logo" style={styles.h1}>ARTis</h1></Link>
+                : <><section style={styles.headerbtnscontainers_style}>
+                    <Link to="/"><h1 id="logo" style={togglestylestate[0].h1}>ARTis</h1></Link>
+                    <section style={styles.leftbtnscontainer_style}>
 
+                        <button style={togglestylestate[0].showsearchformbtn_style} type="submit" onClick={handleSearch}>
+                            <svg onMouseOver={() => { set_searchsvg_fill("red") }} onMouseOut={() => { set_searchsvg_fill("#fff") }}
 
-                    <button style={styles.showsearchformbtn_style} type="submit" onClick={handleSearch}>
-                        <svg onMouseOver={() => { set_searchsvg_fill("red") }} onMouseOut={() => { set_searchsvg_fill("#fff") }}
+                                xmlns="http://www.w3.org/2000/svg" width="2em" height="1.8em" viewBox="0 0 32 32">
+                                <path d="M29 27.586l-7.552-7.552a11.018 11.018 0 1 0-1.414 1.414L27.586 29zM4 13a9 9 0 1 1 
+        9 9a9.01 9.01 0 0 1-9-9z" fill={togglestylestate[0].searchfill} /></svg>
+                        </button>
+                        <MenuSection />
+                    </section>
 
-                            xmlns="http://www.w3.org/2000/svg" width="2em" height="1.8em" viewBox="0 0 32 32">
-                            <path d="M29 27.586l-7.552-7.552a11.018 11.018 0 1 0-1.414 1.414L27.586 29zM4 13a9 9 0 1 1 
-        9 9a9.01 9.01 0 0 1-9-9z" fill={searchsvg_fill} /></svg>
-                    </button>
+                </section>
                 </>}
         </header>
         {searchfilter && <SearchSuggestion />}
     </>
 
     );
+}
+
+function MenuSection(prop) {
+      const togglestylestate = useContext(lightdarkmode_context);
+
+    const [lightmode, set_lightmode] = useState(true);
+
+    useEffect(() => {
+        if (styles.currentmode === "dark") { set_lightmode(false) }
+    }, []);
+
+    return (<section >
+
+        {lightmode ? <button style={styles.leftbtns_style}
+        onClick={() => { set_lightmode(false); togglestylestate[1](darkmode_styles); styles.currentmode = "dark"; console.log("dark")    }} >
+
+            <svg xmlns="http://www.w3.org/2000/svg" width="5em" height="3.5em" viewBox="0 0 48 48"><g fill="none"><path d="M9.5 24a5 5 0 1 1 10 0a5 5 0 0 1-10 0z" fill="currentColor" /><path d="M4 24c0-5.523 4.477-10 10-10h20c5.523 0 10 4.477 10 10s-4.477 10-10 10H14C8.477 34 4 29.523 4 24zm10-7.5a7.5 7.5 0 0 0 0 15h20a7.5 7.5 0 0 0 0-15H14z" fill={styles.searchfill} /></g></svg>
+        </button> :
+
+
+            <button style={styles.leftbtns_style}
+            onClick={() => { set_lightmode(true); togglestylestate[1](styles); styles.currentmode = "light"; console.log("light")  }}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="5em" height="3.5em" viewBox="0 0 48 48"><g fill="white"><path d="M44 24c0-5.523-4.477-10-10-10H14C8.477 14 4 18.477 4 24s4.477 10 10 10h20c5.523 0 10-4.477 10-10zm-5.5 0a5 5 0 1 1-10 0a5 5 0 0 1 10 0z" fill="white"/></g></svg>
+            </button>
+        }
+    </section>)
 }
 
 function ImageList() {
@@ -116,7 +149,7 @@ function ImageList() {
     const [imgfour_boxstatus, set_imgfour_boxstatus] = useState({ display: "none" });
     const [imgfive_boxstatus, set_imgfive_boxstatus] = useState({ display: "none" });
     const [imgsix_boxstatus, set_imgsix_boxstatus] = useState({ display: "none" });
- 
+
 
 
     arts.img1.boxstatus = [imgone_boxstatus, set_imgone_boxstatus];
@@ -147,41 +180,49 @@ function ImageList() {
     arts.img23.boxstatus = [imgfive_boxstatus, set_imgfive_boxstatus];
     arts.img24.boxstatus = [imgsix_boxstatus, set_imgsix_boxstatus];
 
+    const [togglestyle, set_togglestyle] = useState(styles);
 
-    return (<><Header />
+    useEffect(() => {
+        if (styles.currentmode === "dark") { set_togglestyle(darkmode_styles) }
+    }, []);
+
+    return (<>
+        <lightdarkmode_context.Provider value={[togglestyle, set_togglestyle]}>
+            <Header togglestylestate={[togglestyle, set_togglestyle]} />
+        </lightdarkmode_context.Provider>
         <section id="main_container" style={styles.maincontainer_style} >
 
             <ul className="imglist_container">
                 {
                     Object.entries(arts).map(([slug, { title, artist, price, img, boxstatus }]) =>
-                    <li style={styles.imglist_style} key={slug}>
+                        <li style={styles.imglist_style} key={slug}>
 
-                        <Link to={`/${slug}`}>
-                            <figure style={styles.img_textover}>
+                            <Link to={`/${slug}`}>
+                                <figure style={styles.img_textover}>
 
-                                <img style={styles.frontimg_style} src={img} alt="" />
-                                <figcaption style={styles.figcaption_style_visible}
-                                    onMouseOver={() => {
-                                        boxstatus[1]({
-                                            display: "flex",
-                                            justifyContent: "space-between",
-                                            alignItems: "flex-end",
-                                            background: "-moz-linear-gradient(rgba(0,0,0,0) 55%, black)",
-                                            height: "40vh",
-                                        })
-                                    }}
-                                    onMouseOut={() => { boxstatus[1]({ display: "none" }) }}
-                                >
+                                    <img style={styles.frontimg_style} src={img} alt="" />
+                                    <figcaption style={styles.figcaption_style_visible}
+                                        onMouseOver={() => {
+                                            boxstatus[1]({
+                                                display: "flex",
+                                                justifyContent: "space-between",
+                                                alignItems: "flex-end",
+                                                background: "-moz-linear-gradient(rgba(0,0,0,0) 55%, black)",
+                                                height: "40vh",
+                                            })
+                                        }}
+                                        onMouseOut={() => { boxstatus[1]({ display: "none" }) }}
+                                    >
 
-                                    <section style={boxstatus[0]}>
-                                        <p style={styles.figcaption_para}>{`${title} by ${artist}`}</p>
-                                    </section>
-                                </figcaption>
-                            </figure>
-                        </Link>
-                    </li>
+                                        <section style={boxstatus[0]}>
+                                            <p style={styles.figcaption_para}>{`${title} by ${artist}`}</p>
+                                        </section>
+                                    </figcaption>
+                                </figure>
+                            </Link>
+                        </li>
 
-                ) }
+                    )}
             </ul>
         </section>
     </>
@@ -189,6 +230,8 @@ function ImageList() {
 }
 
 function ViewImg() {
+    const [togglestyle, set_togglestyle] = useState(styles);
+
     const { slug } = useParams();
 
     let art = arts[slug];
@@ -198,6 +241,12 @@ function ViewImg() {
     const [imglike_status, set_imglike_status] = useState(art.likestatus[0]);
     const [likecounter_status, set_likecounter_status] = useState(art.likestatus[3])
     const [stroke, setstroke] = useState(art.likestatus[4]);
+
+
+    useEffect(() => {
+        if (styles.currentmode === "dark") { set_togglestyle(darkmode_styles) }
+    }, []);
+
 
     const likeDislike = () => {
         if (art.likestatus[0] === "white") {
@@ -225,9 +274,9 @@ function ViewImg() {
         //track list of comments
         const [comments, setcomments] = useState(art.comments);
         const [commnetsize, setsommentsize] = useState(art.commentsSize);
-    
+
         let accountkey = Object.keys(comments);
-    
+
         const handleSubmit = (event) => {
             event.preventDefault();
             art.comments.unknown = comment;
@@ -236,22 +285,22 @@ function ViewImg() {
             ++art.commentsSize;
             setsommentsize(art.commentsSize);
         }
-    
+
         return (<section style={styles.CommentsSection} >
             <div style={styles.commentcancle_containerstyle}>
                 <p style={styles.commentcancle_parastyle}>Comments  {commnetsize}</p>
             </div>
-    
-                <section  >
+
+            <section  >
                 <div style={styles.commentform_container_style}>
                     <form onSubmit={handleSubmit}>
                         <textarea onFocus={() => set_commentfocus(true)} style={styles.commenttextarea_style} value={comment} placeholder="Add comment..." onChange={(e) => setcomment(e.target.value)}></textarea>
-    
+
                         {commentfocus && <CancleComment focusFunc={set_commentfocus} emptyCommentForm_func={setcomment} />}
-    
+
                     </form>
                 </div>
-    
+
                 <section>
                     <ul>
                         {
@@ -264,13 +313,17 @@ function ViewImg() {
             </section>
         </section>);
     }
-    
 
 
 
-    return (<><Header />
+
+    return (<>
+        <lightdarkmode_context.Provider value={[togglestyle, set_togglestyle]}>
+        <Header togglestylestate={[togglestyle, set_togglestyle]} />
+    </lightdarkmode_context.Provider>
+
         <section >
-            <div style={styles.viewimg_containerstyle} >
+            <div style={togglestyle[0].viewimg_containerstyle} >
                 <img style={styles.viewimg_imgstyle} src={art.img} alt="" />
             </div>
             <section style={styles.halfpagecontainer_style}>
@@ -302,7 +355,7 @@ function ViewImg() {
                 <article style={styles.bottombox_maincontainer}>
 
                     <CommentsSection />
-                    <SuggestionImgs artobject={art}  />
+                    <SuggestionImgs artobject={art} />
                 </article>
             </section>
         </section></>
@@ -312,6 +365,8 @@ function ViewImg() {
 
 
 function CancleComment(prop) {
+    const togglestylestate = useContext(lightdarkmode_context);
+
     return (<div style={styles.commnetbtns_container_style}>
         <button onClick={() => { prop.focusFunc(false); prop.emptyCommentForm_func("") }} style={styles.commentcanclebtn_style}>Cancle</button>
         <input type="submit" style={styles.commentsubmitbtn_style} value="COMMENT" />
@@ -319,6 +374,7 @@ function CancleComment(prop) {
 }
 
 function SuggestionImgs(prop) {
+    const togglestylestate = useContext(lightdarkmode_context);
 
     return (<>
         <article style={styles.imgsuggestionarticlestyle}>
@@ -330,7 +386,7 @@ function SuggestionImgs(prop) {
                         <Link to={`/${slug}`}>
 
                             <li key={`${title}-${price}`}>
-                                <img style={styles.frontimg_style} src={img} alt=""  />
+                                <img style={styles.frontimg_style} src={img} alt="" />
                             </li>
                         </Link>
 
