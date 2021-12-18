@@ -24,10 +24,21 @@ const styles = {
     menusectionstyle : {
         position: "fixed",
         top: "7.1vh",
-        left: "70%",
+        left: "89%",
         right : "2%",
         zIndex: "9",
-        backgroundColor: "red",
+        backgroundColor: "rgb(255, 238, 238)",
+        width: "9%",
+        paddingBottom: "1rem",
+    },
+    theamtoggle_style : {
+        backgroundColor: "inherit",
+        border: "none",
+        width: "100%",
+    },
+    signinbtn_style : {
+        backgroundColor: "inherit",
+        border: "none",
     },
     submitsearchlink_style : {
         marginRight: "4%",
@@ -37,6 +48,7 @@ const styles = {
         width: "17%",
         display: "flex",
         justifyContent: "center",
+        height: "7vh",
     },
      searchinput_style : {
         marginRight: "4%",

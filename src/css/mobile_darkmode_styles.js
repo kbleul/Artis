@@ -180,6 +180,16 @@ const darkmode_styles = {
         borderBottom: "1px solid  rgb(85, 83, 83)",
         color: "white",
     },
+    menusectionstyle : {
+        position: "fixed",
+        top: "7.1vh",
+        left: "83%",
+        right : "2%",
+        zIndex: "9",
+        backgroundColor: "lightgray",
+        width: "15%",
+        paddingBottom: "1rem",
+    },
 
 
 }

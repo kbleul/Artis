@@ -33,10 +33,14 @@
         borderBottom: '1px solid #000',
         backgroundColor: "white",
     },
+    submitsearchlink_style : {
+        marginRight: "4%",
+    },
     searchmenubtn_container: {
-        width: "17%",
+        width: "25%",
         display: "flex",
         justifyContent: "center",
+        height: "7vh",
 
     },
      showsearchformbtn_style : {
@@ -77,10 +81,21 @@
     menusectionstyle : {
         position: "fixed",
         top: "7.1vh",
-        left: "70%",
+        left: "83%",
         right : "2%",
         zIndex: "9",
-        backgroundColor: "red",
+        backgroundColor: "rgb(255, 238, 238)",
+        width: "15%",
+        paddingBottom: "1rem",
+    },
+    theamtoggle_style : {
+        backgroundColor: "inherit",
+        border: "none",
+        width: "100%",
+    },
+    signinbtn_style : {
+        backgroundColor: "inherit",
+        border: "none",
     },
     /*-----------------------------------------*/
      viewimg_container : { backgroundColor: "white" },

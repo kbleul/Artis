@@ -20,12 +20,15 @@ const darkmode_styles = {
         fontSize: "2rem",//adedd
     },
     menusectionstyle : {
-        position: "fixed",
-        top: "7.1vh",
-        left: "70%",
-        right : "2%",
-        zIndex: "9",
-        backgroundColor: "red",
+            position: "fixed",
+            top: "7.1vh",
+            left: "89%",
+            right : "2%",
+            zIndex: "9",
+            backgroundColor: "lightgray",
+            width: "9%",
+            paddingBottom: "1rem",
+        
     },
     searchinput_style: {
         marginRight: "4%",
