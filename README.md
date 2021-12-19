@@ -9,5 +9,5 @@
        - Light and dark mode ...
        
    ## Deployed at
-       ~ k-artis.netlify.app
+       ~ https://k-artis.netlify.app
        
