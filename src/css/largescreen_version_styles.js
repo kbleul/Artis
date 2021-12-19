@@ -98,10 +98,6 @@ const styles = {
     halfpagecontainer_style: {
         backgroundColor: "white",
     },
-
-    halfpagecontainer_style: {
-        backgroundColor: "white",
-    },
     viewimg_containerstyle: {
         // backgroundColor: "#403939",  //removed
         background: "linear-gradient(#fff, rgb(255, 184, 184))",//added

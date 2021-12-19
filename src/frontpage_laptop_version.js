@@ -14,7 +14,7 @@ import img6 from "./ART/6.jpg";
 
 const lightdarkmode_context = createContext();
 
-export default function Desktopfrontpage() {
+export default function Laptopfrontpage() {
 
     return (<Brouter>
         <Routes>

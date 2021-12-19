@@ -3,7 +3,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import Mobilefrontpage from "./frontpage_mobile_version";
 import Tabfrontpage from "./frontpage_tablet_version";
-import Desktopfrontpage from "./frontpage_desktop_version";
+import Laptopfrontpage from "./frontpage_laptop_version";
 import LargeScreenfrontpage from "./frontpage_largeScreen_version";
 import './css/App.css';
 import { useMediaQuery } from 'react-responsive';
@@ -29,7 +29,7 @@ export default function App() {
   return (<article>
     {isMobileDevice && <Mobilefrontpage />}
     {isTabletDevice && <Tabfrontpage />}
-    {isDesktopDevice && <Desktopfrontpage />}
+    {isDesktopDevice && <Laptopfrontpage />}
     {isLargeScreenDevice && <LargeScreenfrontpage />}
 
 
