@@ -7,7 +7,6 @@ const styles = {
         top: "0",
         zIndex: "10",
     },
-
     h1: {
         color: "black",
         fontWeight: "900",
@@ -88,13 +87,11 @@ const styles = {
     halfpagecontainer_style: {
         backgroundColor: "white",
     },
-
     viewimg_containerstyle: {
         // backgroundColor: "#403939",  //removed
         background: "linear-gradient(white,#f4d1d1)",//added
         marginBottom: ".5rem", //changed
     },
-
     viewimg_imgstyle: {
         width: "80%",  //changed
         height: "65vh",

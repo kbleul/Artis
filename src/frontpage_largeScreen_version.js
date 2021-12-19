@@ -1,15 +1,18 @@
 
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, createContext, useContext } from "react";
 import { BrowserRouter as Brouter, Routes, Route, Link } from "react-router-dom";
 import { useParams } from "react-router";
 import styles from "./css/largescreen_version_styles";
+import darkmode_styles from "./css/largescreen_darkmode_styles";
 import img1 from "./ART/1.jpg";
 import img2 from "./ART/2.jpg";
 import img3 from "./ART/3.jpg";
 import img4 from "./ART/4.jpg";
 import img5 from "./ART/5.jpg";
 import img6 from "./ART/6.jpg";
+
+const lightdarkmode_context = createContext();
 
 
 export default function LargeScreenfrontpage() {
@@ -24,6 +27,7 @@ export default function LargeScreenfrontpage() {
 }
 
 function Header() {
+    const togglestylestate = useContext(lightdarkmode_context);
 
     const [searchsvg_fill, set_searchsvg_fill] = useState("#fff");
     const [showsearchform, set_showsearchform] = useState(false);
@@ -33,7 +37,7 @@ function Header() {
 
     function Searchinput() {
         return (<><form style={styles.searchform_style} onSubmit={handleSearch}>
-            <input autoFocus={true} key="search" style={styles.searchinput_style} type="text" list="suggestions" value={searchinput} placeholder="Search..." onChange={onSearchInput} />
+            <input autoFocus={true} key="search" style={togglestylestate[0].searchinput_style} type="text" list="suggestions" value={searchinput} placeholder="Search..." onChange={onSearchInput} />
         </form>
         </>);
     }
@@ -79,39 +83,67 @@ function Header() {
 
     }
     return (<>
-        <header id="header_wrapper" style={styles.header_style}>
+        <header id="header_wrapper" style={togglestylestate[0].header_style}>
 
             {showsearchform ? <><Searchinput />  <Link to={`/${searchinput}`} >
-                <button onClick={searchAction} style={styles.searchactionbtn_style}>
+                <button onClick={searchAction} style={togglestylestate[0].searchactionbtn_style}>
                     <svg onMouseOver={() => { set_searchsvg_fill("red") }} onMouseOut={() => { set_searchsvg_fill("#fff") }}
 
                         xmlns="http://www.w3.org/2000/svg" width="2em" height="1.8em" viewBox="0 0 32 32">
                         <path d="M29 27.586l-7.552-7.552a11.018 11.018 0 1 0-1.414 1.414L27.586 29zM4 13a9 9 0 1 1 
-        9 9a9.01 9.01 0 0 1-9-9z" fill={searchsvg_fill} /></svg>
+        9 9a9.01 9.01 0 0 1-9-9z" fill={togglestylestate[0].searchfill} /></svg>
                 </button>
             </Link></>
-                : <><Link to="/"><h1 id="logo" style={styles.h1}>ARTis</h1></Link>
+                : <>
+                    <section style={styles.headerbtnscontainers_style}>
 
+                        <Link to="/">
+                            <h1 id="logo" style={togglestylestate[0].h1}>ARTis</h1></Link>
 
-                    <button style={styles.showsearchformbtn_style} type="submit" onClick={handleSearch}>
-                        <svg onMouseOver={() => { set_searchsvg_fill("red") }} onMouseOut={() => { set_searchsvg_fill("#fff") }}
+                        <section style={styles.leftbtnscontainer_style}>
+                            <button style={togglestylestate[0].showsearchformbtn_style} type="submit" onClick={handleSearch}>
+                                <svg onMouseOver={() => { set_searchsvg_fill("red") }} onMouseOut={() => { set_searchsvg_fill("#fff") }}
 
-                            xmlns="http://www.w3.org/2000/svg" width="2em" height="1.8em" viewBox="0 0 32 32">
-                            <path d="M29 27.586l-7.552-7.552a11.018 11.018 0 1 0-1.414 1.414L27.586 29zM4 13a9 9 0 1 1 
-        9 9a9.01 9.01 0 0 1-9-9z" fill={searchsvg_fill} /></svg>
-                    </button>
-                    <section style={styles.menulissection_style}>
-            <ul style={styles.menulistul_style}>
-                <li style={styles.menulistli_style}><button>Dark/Light</button></li>
-                <li style={styles.menulistli_style}><button>Sign In</button></li>
-            </ul>
-        </section>
+                                    xmlns="http://www.w3.org/2000/svg" width="2em" height="1.8em" viewBox="0 0 32 32">
+                                    <path d="M29 27.586l-7.552-7.552a11.018 11.018 0 1 0-1.414 1.414L27.586 29zM4 13a9 9 0 1 1 
+        9 9a9.01 9.01 0 0 1-9-9z" fill={togglestylestate[0].searchfill} /></svg>
+                            </button>
+                            <MenuSection />
+
+                        </section>
+                    </section>
                 </>}
         </header>
         {searchfilter && <SearchSuggestion />}
     </>
 
     );
+}
+
+function MenuSection(prop) {
+    const togglestylestate = useContext(lightdarkmode_context);
+
+    const [lightmode, set_lightmode] = useState(true);
+
+    useEffect(() => {
+        if (styles.currentmode === "dark") { set_lightmode(false) }
+    }, []);
+
+    return (<section style={styles.togglecontainer_style}>
+
+        {lightmode ? <button style={styles.leftbtns_style}
+            onClick={() => { set_lightmode(false); togglestylestate[1](darkmode_styles); styles.currentmode = "dark"; console.log("dark") }} >
+
+            <svg xmlns="http://www.w3.org/2000/svg" width="5em" height="3.5em" viewBox="0 0 48 48"><g fill="none"><path d="M9.5 24a5 5 0 1 1 10 0a5 5 0 0 1-10 0z" fill="currentColor" /><path d="M4 24c0-5.523 4.477-10 10-10h20c5.523 0 10 4.477 10 10s-4.477 10-10 10H14C8.477 34 4 29.523 4 24zm10-7.5a7.5 7.5 0 0 0 0 15h20a7.5 7.5 0 0 0 0-15H14z" fill={styles.searchfill} /></g></svg>
+        </button> :
+
+
+            <button style={styles.leftbtns_style}
+                onClick={() => { set_lightmode(true); togglestylestate[1](styles); styles.currentmode = "light"; console.log("light") }}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="5em" height="3.5em" viewBox="0 0 48 48"><g fill="white"><path d="M44 24c0-5.523-4.477-10-10-10H14C8.477 14 4 18.477 4 24s4.477 10 10 10h20c5.523 0 10-4.477 10-10zm-5.5 0a5 5 0 1 1-10 0a5 5 0 0 1 10 0z" fill="white" /></g></svg>
+            </button>
+        }
+    </section>)
 }
 
 function ImageList() {
@@ -122,7 +154,7 @@ function ImageList() {
     const [imgfour_boxstatus, set_imgfour_boxstatus] = useState({ display: "none" });
     const [imgfive_boxstatus, set_imgfive_boxstatus] = useState({ display: "none" });
     const [imgsix_boxstatus, set_imgsix_boxstatus] = useState({ display: "none" });
- 
+
 
 
     arts.img1.boxstatus = [imgone_boxstatus, set_imgone_boxstatus];
@@ -154,40 +186,50 @@ function ImageList() {
     arts.img24.boxstatus = [imgsix_boxstatus, set_imgsix_boxstatus];
 
 
-    return (<><Header />
-        <section id="main_container" style={styles.maincontainer_style} >
+
+    const [togglestyle, set_togglestyle] = useState(styles);
+
+    useEffect(() => {
+        if (styles.currentmode === "dark") { set_togglestyle(darkmode_styles) }
+    }, []);
+
+    return (<>
+        <lightdarkmode_context.Provider value={[togglestyle, set_togglestyle]}>
+            <Header togglestylestate={[togglestyle, set_togglestyle]} />
+        </lightdarkmode_context.Provider>
+        <section id="main_container" style={togglestyle.maincontainer_style} >
 
             <ul className="imglist_container" style={styles.imaglist_ulstyle}>
                 {
                     Object.entries(arts).map(([slug, { title, artist, price, img, boxstatus }]) =>
-                    <li style={styles.imglist_style} key={slug}>
+                        <li style={styles.imglist_style} key={slug}>
 
-                        <Link to={`/${slug}`}>
-                            <figure style={styles.img_textover}>
+                            <Link to={`/${slug}`}>
+                                <figure style={styles.img_textover}>
 
-                                <img style={styles.frontimg_style} src={img} alt="" />
-                                <figcaption style={styles.figcaption_style_visible}
-                                    onMouseOver={() => {
-                                        boxstatus[1]({
-                                            display: "flex",
-                                            justifyContent: "space-between",
-                                            alignItems: "flex-end",
-                                            background: "-moz-linear-gradient(rgba(0,0,0,0) 55%, black)",
-                                            height: "40vh",
-                                        })
-                                    }}
-                                    onMouseOut={() => { boxstatus[1]({ display: "none" }) }}
-                                >
+                                    <img style={styles.frontimg_style} src={img} alt="" />
+                                    <figcaption style={styles.figcaption_style_visible}
+                                        onMouseOver={() => {
+                                            boxstatus[1]({
+                                                display: "flex",
+                                                justifyContent: "space-between",
+                                                alignItems: "flex-end",
+                                                background: "-moz-linear-gradient(rgba(0,0,0,0) 55%, black)",
+                                                height: "40vh",
+                                            })
+                                        }}
+                                        onMouseOut={() => { boxstatus[1]({ display: "none" }) }}
+                                    >
 
-                                    <section style={boxstatus[0]}>
-                                        <p style={styles.figcaption_para}>{`${title} by ${artist}`}</p>
-                                    </section>
-                                </figcaption>
-                            </figure>
-                        </Link>
-                    </li>
+                                        <section style={boxstatus[0]}>
+                                            <p style={styles.figcaption_para}>{`${title} by ${artist}`}</p>
+                                        </section>
+                                    </figcaption>
+                                </figure>
+                            </Link>
+                        </li>
 
-                ) }
+                    )}
             </ul>
         </section>
     </>
@@ -195,6 +237,8 @@ function ImageList() {
 }
 
 function ViewImg() {
+    const [togglestyle, set_togglestyle] = useState(styles);
+
     const { slug } = useParams();
 
     let art = arts[slug];
@@ -224,6 +268,10 @@ function ViewImg() {
 
     }
 
+    useEffect(() => {
+        if (styles.currentmode === "dark") { set_togglestyle(darkmode_styles) }
+    }, []);
+
     function CommentsSection() {
 
         const [comment, setcomment] = useState("");
@@ -231,9 +279,9 @@ function ViewImg() {
         //track list of comments
         const [comments, setcomments] = useState(art.comments);
         const [commnetsize, setsommentsize] = useState(art.commentsSize);
-    
+
         let accountkey = Object.keys(comments);
-    
+
         const handleSubmit = (event) => {
             event.preventDefault();
             art.comments.unknown = comment;
@@ -242,50 +290,57 @@ function ViewImg() {
             ++art.commentsSize;
             setsommentsize(art.commentsSize);
         }
-    
+
         return (<section style={styles.CommentsSection} >
-            <div style={styles.commentcancle_containerstyle}>
-                <p style={styles.commentcancle_parastyle}>Comments  {commnetsize}</p>
+            <div style={togglestyle.commentcancle_containerstyle}>
+                <p style={togglestyle.commentcancle_parastyle}>Comments  {commnetsize}</p>
             </div>
-    
-                <section  >
+
+            <section  >
                 <div style={styles.commentform_container_style}>
                     <form onSubmit={handleSubmit}>
-                        <textarea onFocus={() => set_commentfocus(true)} style={styles.commenttextarea_style} value={comment} placeholder="Add comment..." onChange={(e) => setcomment(e.target.value)}></textarea>
-    
-                        {commentfocus && <CancleComment focusFunc={set_commentfocus} emptyCommentForm_func={setcomment} />}
-    
+                        <textarea onFocus={() => set_commentfocus(true)} style={togglestyle.commenttextarea_style} value={comment} placeholder="Add comment..." onChange={(e) => setcomment(e.target.value)}></textarea>
+
+                        {commentfocus &&
+                            <lightdarkmode_context.Provider value={[togglestyle, set_togglestyle]}>
+                                <CancleComment focusFunc={set_commentfocus} emptyCommentForm_func={setcomment} />
+                            </lightdarkmode_context.Provider>}
+
                     </form>
                 </div>
-    
+
                 <section>
                     <ul>
                         {
                             accountkey.map((account) =>
                                 <><li style={styles.commentaccount_style} key={account}>{account}</li>
-                                    <li style={styles.commenttext_style} key={`comment${account}`}>{art.comments[account]}</li></>)
+                                    <li style={togglestyle.commenttext_style} key={`comment${account}`}>{art.comments[account]}</li></>)
                         }
                     </ul>
                 </section>
             </section>
         </section>);
     }
-    
 
 
 
-    return (<><Header />
-        <section >
-            <div style={styles.viewimg_containerstyle} >
+
+    return (<>
+        <lightdarkmode_context.Provider value={[togglestyle, set_togglestyle]}>
+            <Header togglestylestate={[togglestyle, set_togglestyle]} />
+        </lightdarkmode_context.Provider>
+
+        <section style={togglestyle.halfpagecontainer_style}>
+            <div style={togglestyle.viewimg_containerstyle} >
                 <img style={styles.viewimg_imgstyle} src={art.img} alt="" />
             </div>
-            <section style={styles.halfpagecontainer_style}>
-                <div style={styles.arttitlecontainer_style}>
-                    <p style={styles.arttitlepara_style}>{art.title} - {art.artist}</p>
+            <section style={togglestyle.halfpagecontainer_style}>
+                <div style={togglestyle.arttitlecontainer_style}>
+                    <p style={togglestyle.arttitlepara_style}>{art.title} - {art.artist}</p>
                 </div>
                 <section>
-                    <div style={styles.pricelikebtn_container}>
-                        <p style={styles.pricepara_style}>Price : {art.price}</p>
+                    <div style={togglestyle.pricelikebtn_container}>
+                        <p style={togglestyle.pricepara_style}>Price : {art.price}</p>
 
 
                         <div style={styles.likebtn_container}>
@@ -295,20 +350,21 @@ function ViewImg() {
                                     width="1.5em" height="1.5em" viewBox="0 0 48 48">
                                     <path d="M15 8C8.925 8 4 12.925 4 19c0 11 13 21 20 23.326C31 40 44 30 44 19c0-6.075-4.925-11-11-11c-3.72 0-7.01 1.847-9 4.674A10.987 10.987 0 0 0 15 8z" fill={art.likestatus[0]} stroke={art.likestatus[4]} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" /></svg>
                             </button>
-                            <p style={styles.likecountpar_style}>{art.likestatus[3]}</p>
+                            <p style={togglestyle.likecountpar_style}>{art.likestatus[3]}</p>
                         </div>
                     </div>
 
                     <div style={styles.accountbuy_container_style}>
-                        <p style={styles.accountpar_style}>{art.account}</p>
-                        <button style={styles.buybtn_style} onMouseOver={(e) => { e.target.style.opacity = ".8"; }} onMouseOut={(e) => { e.target.style.opacity = "1"; }}>Buy</button>
+                        <p style={togglestyle.accountpar_style}>{art.account}</p>
+                        <button style={togglestyle.buybtn_style} onMouseOver={(e) => { e.target.style.opacity = ".8"; }} onMouseOut={(e) => { e.target.style.opacity = "1"; }}>Buy</button>
                     </div>
                 </section>
 
                 <article style={styles.bottombox_maincontainer}>
 
+
                     <CommentsSection />
-                    <SuggestionImgs artobject={art}  />
+                    <SuggestionImgs artobject={art} />
                 </article>
             </section>
         </section></>
@@ -318,9 +374,11 @@ function ViewImg() {
 
 
 function CancleComment(prop) {
+    const togglestylestate = useContext(lightdarkmode_context);
+
     return (<div style={styles.commnetbtns_container_style}>
-        <button onClick={() => { prop.focusFunc(false); prop.emptyCommentForm_func("") }} style={styles.commentcanclebtn_style}>Cancle</button>
-        <input type="submit" style={styles.commentsubmitbtn_style} value="COMMENT" />
+        <button onClick={() => { prop.focusFunc(false); prop.emptyCommentForm_func("") }} style={togglestylestate[0].commentcanclebtn_style}>Cancle</button>
+        <input type="submit" style={togglestylestate[0].commentsubmitbtn_style} value="COMMENT" />
     </div>)
 }
 
@@ -336,7 +394,7 @@ function SuggestionImgs(prop) {
                         <Link to={`/${slug}`}>
 
                             <li key={`${title}-${price}`}>
-                                <img style={styles.frontimg_style} src={img} alt=""  />
+                                <img style={styles.frontimg_style} src={img} alt="" />
                             </li>
                         </Link>
 

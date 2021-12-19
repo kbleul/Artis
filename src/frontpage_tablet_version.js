@@ -32,97 +32,96 @@ function Header() {
 
     const [searchsvg_fill, set_searchsvg_fill] = useState("#fff");
     const [showsearchform, set_showsearchform] = useState(false);
-    const [searchinput , set_searchinput ] = useState("");
-    const [searchfilter , set_searchfilter] = useState([]);
+    const [searchinput, set_searchinput] = useState("");
+    const [searchfilter, set_searchfilter] = useState([]);
     const [showmenu, set_showmenu] = useState(false);
 
 
     function Searchinput() {
         return (<><form style={styles.searchform_style} onSubmit={handleSearch}>
-            <input autoFocus={true} key="search" style={togglestylestate[0].searchinput_style} type="text" list="suggestions" value={searchinput} placeholder="Search..." onChange={onSearchInput}/>
-            </form>
+            <input autoFocus={true} key="search" style={togglestylestate[0].searchinput_style} type="text" list="suggestions" value={searchinput} placeholder="Search..." onChange={onSearchInput} />
+        </form>
         </>);
     }
 
     const onSearchInput = e => {
         set_searchfilter([]);
-        set_searchinput( e.target.value );
+        set_searchinput(e.target.value);
 
-        if(e.target.value === "") {    set_searchfilter([]);  set_searchfilter("");   }
+        if (e.target.value === "") { set_searchfilter([]); set_searchfilter(""); }
 
         else {
-                arts_metadata.filter(val => {
-                    
-                    if(val.toLowerCase().includes( e.target.value.toLowerCase()))
-                    { set_searchfilter(filter => [...filter, val])}
-                    
-                })
-            }
+            arts_metadata.filter(val => {
+
+                if (val.toLowerCase().includes(e.target.value.toLowerCase())) { set_searchfilter(filter => [...filter, val]) }
+
+            })
+        }
     }
 
     function SearchSuggestion() {
         return (
-                <section style={styles.search_suggestioncontainer_style}>
+            <section style={styles.search_suggestioncontainer_style}>
                 {
-                      
-                        searchfilter.map((account) =>
-                        <><li style={styles.searchsuggestionlist_style} onClick={() => { set_searchinput(account); set_searchfilter([])}} key={account}>{account}</li>
-                           </>)
+
+                    searchfilter.map((account) =>
+                        <><li style={styles.searchsuggestionlist_style} onClick={() => { set_searchinput(account); set_searchfilter([]) }} key={account}>{account}</li>
+                        </>)
                 }
-                </section>);
+            </section>);
     }
 
-  const handleSearch = (e) => {
-      e.preventDefault();
+    const handleSearch = (e) => {
+        e.preventDefault();
 
-   if (showsearchform) {  set_showsearchform(false); set_searchfilter([]); } 
-   else { set_showsearchform(true); }
-    set_searchinput("");
-  }
+        if (showsearchform) { set_showsearchform(false); set_searchfilter([]); }
+        else { set_showsearchform(true); }
+        set_searchinput("");
+    }
 
-  const searchAction = () => {
-    
-    set_showsearchform(false)
-  
-  }
+    const searchAction = () => {
+
+        set_showsearchform(false)
+
+    }
     return (<>
         <header id="header_wrapper" style={togglestylestate[0].header_style}>
 
             {showsearchform ? <><Searchinput />  <Link style={styles.submitsearchlink_style} to={`/${searchinput}`} >
-            <button onClick={searchAction} style={togglestylestate[0].searchactionbtn_style}>
-                <svg  onMouseOver={() => { set_searchsvg_fill("red") }} onMouseOut={() => { set_searchsvg_fill("#fff") }}
+                <button onClick={searchAction} style={togglestylestate[0].searchactionbtn_style}>
+                    <svg onMouseOver={() => { set_searchsvg_fill("red") }} onMouseOut={() => { set_searchsvg_fill("#fff") }}
 
-                xmlns="http://www.w3.org/2000/svg" width="2em" height="1.8em" viewBox="0 0 32 32">
-                <path d="M29 27.586l-7.552-7.552a11.018 11.018 0 1 0-1.414 1.414L27.586 29zM4 13a9 9 0 1 1 
+                        xmlns="http://www.w3.org/2000/svg" width="2em" height="1.8em" viewBox="0 0 32 32">
+                        <path d="M29 27.586l-7.552-7.552a11.018 11.018 0 1 0-1.414 1.414L27.586 29zM4 13a9 9 0 1 1 
         9 9a9.01 9.01 0 0 1-9-9z" fill={togglestylestate[0].searchfill} /></svg>
-            </button>
-    </Link></>
+                </button>
+            </Link></>
                 : <><Link to="/"><h1 id="logo" style={togglestylestate[0].h1}>ARTis</h1></Link>
 
-           <div style={styles.searchmenubtn_container}>  
-        <button style={togglestylestate[0].showsearchformbtn_style} type="submit" onClick={handleSearch}>
-            <svg  onMouseOver={() => { set_searchsvg_fill("red") }} onMouseOut={() => { set_searchsvg_fill("#fff") }}
+                    <div style={styles.searchmenubtn_container}>
+                        <button style={togglestylestate[0].showsearchformbtn_style} type="submit" onClick={handleSearch}>
+                            <svg onMouseOver={() => { set_searchsvg_fill("red") }} onMouseOut={() => { set_searchsvg_fill("#fff") }}
 
-                xmlns="http://www.w3.org/2000/svg" width="2em" height="1.8em" viewBox="0 0 32 32">
-                <path d="M29 27.586l-7.552-7.552a11.018 11.018 0 1 0-1.414 1.414L27.586 29zM4 13a9 9 0 1 1 
+                                xmlns="http://www.w3.org/2000/svg" width="2em" height="1.8em" viewBox="0 0 32 32">
+                                <path d="M29 27.586l-7.552-7.552a11.018 11.018 0 1 0-1.414 1.414L27.586 29zM4 13a9 9 0 1 1 
         9 9a9.01 9.01 0 0 1-9-9z" fill={togglestylestate[0].searchfill} /></svg>
-        </button>
-        <button style={togglestylestate[0].showmenubtn_style} type="submit" onClick={() => {
-            if (showmenu === true) { console.log("aa"); set_showmenu(false); }
-            else { console.log(showmenu === "false"); set_showmenu(true); }
-        }}>
-        <svg xmlns="http://www.w3.org/2000/svg" 
-        width="2.1em" height="3.5em" viewBox="0 0 48 48"><g fill={togglestylestate[0].searchfill} ><path d="M6 22h36v4H6z"/><path d="M6 10h36v4H6z"/><path d="M6 34h36v4H6z"/></g></svg>
-        </button>
-        </div>  
-        </>}
-        </header> 
+                        </button>
+                        <button style={togglestylestate[0].showmenubtn_style} type="submit" onClick={() => {
+                            if (showmenu === true) { console.log("aa"); set_showmenu(false); }
+                            else { console.log(showmenu === "false"); set_showmenu(true); }
+                        }}>
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                width="2.1em" height="3.5em" viewBox="0 0 48 48"><g fill={togglestylestate[0].searchfill} ><path d="M6 22h36v4H6z" /><path d="M6 10h36v4H6z" /><path d="M6 34h36v4H6z" /></g></svg>
+                        </button>
+                    </div>
+                </>}
+        </header>
         {searchfilter && <SearchSuggestion />}
         {showmenu && <MenuSection setshowmenu={set_showmenu} />}
 
-        </>
-        
-        );
+    </>
+
+    );
 }
 
 
@@ -130,24 +129,24 @@ function MenuSection(prop) {
     const togglestylestate = useContext(lightdarkmode_context);
 
 
-    const[ lightmode, set_lightmode] = useState(true);
+    const [lightmode, set_lightmode] = useState(true);
 
-    useEffect(()=>{
-        if(styles.currentmode === "dark") { set_lightmode(false)}
-    },[]);
+    useEffect(() => {
+        if (styles.currentmode === "dark") { set_lightmode(false) }
+    }, []);
 
     return (<section style={togglestylestate[0].menusectionstyle}>
         <ul>
-      {
-           lightmode ?  <li><button style={styles.theamtoggle_style} onClick={() => { togglestylestate[1](darkmode_styles); styles.currentmode = "dark"; prop.setshowmenu(false); set_lightmode(false) }}>
-            <svg xmlns="http://www.w3.org/2000/svg"width="3.5em" height="2.5em"   viewBox="0 0 48 48"><g fill="none"><path d="M9.5 24a5 5 0 1 1 10 0a5 5 0 0 1-10 0z" fill="currentColor"/><path d="M4 24c0-5.523 4.477-10 10-10h20c5.523 0 10 4.477 10 10s-4.477 10-10 10H14C8.477 34 4 29.523 4 24zm10-7.5a7.5 7.5 0 0 0 0 15h20a7.5 7.5 0 0 0 0-15H14z" fill="currentColor"/></g></svg>
-            </button></li>  :
+            {
+                lightmode ? <li><button style={styles.theamtoggle_style} onClick={() => { togglestylestate[1](darkmode_styles); styles.currentmode = "dark"; prop.setshowmenu(false); set_lightmode(false) }}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="3.5em" height="2.5em" viewBox="0 0 48 48"><g fill="none"><path d="M9.5 24a5 5 0 1 1 10 0a5 5 0 0 1-10 0z" fill="currentColor" /><path d="M4 24c0-5.523 4.477-10 10-10h20c5.523 0 10 4.477 10 10s-4.477 10-10 10H14C8.477 34 4 29.523 4 24zm10-7.5a7.5 7.5 0 0 0 0 15h20a7.5 7.5 0 0 0 0-15H14z" fill="currentColor" /></g></svg>
+                </button></li> :
 
-        
-            <li><button style={styles.theamtoggle_style} onClick={() => { togglestylestate[1](styles); styles.currentmode = "light"; prop.setshowmenu(false); set_lightmode(true)}}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="3.5em" height="2.5em"  viewBox="0 0 48 48"><g fill="none"><path d="M44 24c0-5.523-4.477-10-10-10H14C8.477 14 4 18.477 4 24s4.477 10 10 10h20c5.523 0 10-4.477 10-10zm-5.5 0a5 5 0 1 1-10 0a5 5 0 0 1 10 0z" fill="currentColor"/></g></svg>
-          </button></li>
-        }
+
+                    <li><button style={styles.theamtoggle_style} onClick={() => { togglestylestate[1](styles); styles.currentmode = "light"; prop.setshowmenu(false); set_lightmode(true) }}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="3.5em" height="2.5em" viewBox="0 0 48 48"><g fill="none"><path d="M44 24c0-5.523-4.477-10-10-10H14C8.477 14 4 18.477 4 24s4.477 10 10 10h20c5.523 0 10-4.477 10-10zm-5.5 0a5 5 0 1 1-10 0a5 5 0 0 1 10 0z" fill="currentColor" /></g></svg>
+                    </button></li>
+            }
             <li><button style={styles.signinbtn_style}>Sign In</button></li>
         </ul>
     </section>)
@@ -179,8 +178,8 @@ function ImageList() {
 
     return (<>
         <lightdarkmode_context.Provider value={[togglestyle, set_togglestyle]}>
-        <Header togglestylestate={[togglestyle, set_togglestyle]} />
-    </lightdarkmode_context.Provider>
+            <Header togglestylestate={[togglestyle, set_togglestyle]} />
+        </lightdarkmode_context.Provider>
         <section id="main_container" style={togglestyle.maincontainer_style} >
 
             <ul className="imglist_container">
@@ -190,8 +189,8 @@ function ImageList() {
                         <Link to={`/${slug}`}>
                             <figure style={styles.img_textover}>
 
-                                <img  style={styles.frontimg_style} src={img} alt="" />
-                                <figcaption style={styles.figcaption_style_visible} 
+                                <img style={styles.frontimg_style} src={img} alt="" />
+                                <figcaption style={styles.figcaption_style_visible}
                                     onMouseOver={() => {
                                         boxstatus[1]({
                                             display: "flex",
@@ -215,7 +214,7 @@ function ImageList() {
                 )}
             </ul>
         </section>
-        </>
+    </>
     );
 }
 
@@ -228,8 +227,7 @@ function ViewImg() {
 
     let art = arts[slug];
 
-    if(art === undefined)
-    {  art = arts[connect_metatdata.get(slug)]}
+    if (art === undefined) { art = arts[connect_metatdata.get(slug)] }
 
     useEffect(() => {
         if (styles.currentmode === "dark") { set_togglestyle(darkmode_styles) }
@@ -237,28 +235,28 @@ function ViewImg() {
 
     return (<>
         <lightdarkmode_context.Provider value={[togglestyle, set_togglestyle]}>
-        <Header togglestylestate={[togglestyle, set_togglestyle]}/>
+            <Header togglestylestate={[togglestyle, set_togglestyle]} />
         </lightdarkmode_context.Provider>
 
         <section style={togglestyle.viewimg_container}>
-          <img  style={styles.viewimg_imgstyle} src={art.img} alt="" />
+            <img style={styles.viewimg_imgstyle} src={art.img} alt="" />
 
-        <section style={styles.halfpagecontainer_style}>
-            <div style={togglestyle.arttitlecontainer_style}>
-               <p style={togglestyle.arttitlepara_style}>{art.title} - {art.artist}</p>
-            </div>
+            <section style={styles.halfpagecontainer_style}>
+                <div style={togglestyle.arttitlecontainer_style}>
+                    <p style={togglestyle.arttitlepara_style}>{art.title} - {art.artist}</p>
+                </div>
 
-            {showcomments ?
-                <lightdarkmode_context.Provider value={[togglestyle, set_togglestyle]}>
-                 <CommentsSection artobject={art} commentFunction={setshowcomments}  togglestylestate={[togglestyle, set_togglestyle]}/>
-                 </lightdarkmode_context.Provider>
+                {showcomments ?
+                    <lightdarkmode_context.Provider value={[togglestyle, set_togglestyle]}>
+                        <CommentsSection artobject={art} commentFunction={setshowcomments} togglestylestate={[togglestyle, set_togglestyle]} />
+                    </lightdarkmode_context.Provider>
 
-                :  <lightdarkmode_context.Provider value={[togglestyle, set_togglestyle]}>
-                <SuggestionImgs artobject={art} commentFunction={setshowcomments}  togglestylestate={[togglestyle, set_togglestyle]}/>
-            </lightdarkmode_context.Provider> }
+                    : <lightdarkmode_context.Provider value={[togglestyle, set_togglestyle]}>
+                        <SuggestionImgs artobject={art} commentFunction={setshowcomments} togglestylestate={[togglestyle, set_togglestyle]} />
+                    </lightdarkmode_context.Provider>}
 
-        </section>
-    </section></>
+            </section>
+        </section></>
     );
 }
 
@@ -425,15 +423,15 @@ const arts = {
     },
 }
 
-const arts_metadata = ["The Duel","Familer Life","City Life Algarve,Portugal 1977","Fox Connect In",
-                        "The Particle Dao",  "Waves of Hope"];
+const arts_metadata = ["The Duel", "Familer Life", "City Life Algarve,Portugal 1977", "Fox Connect In",
+    "The Particle Dao", "Waves of Hope"];
 
 const connect_metatdata = new Map();
-        connect_metatdata.set("The Duel" , "img1");
-        connect_metatdata.set("Familer Life" , "img2");
-        connect_metatdata.set("City Life Algarve,Portugal 1977" , "img3");
-        connect_metatdata.set("Fox Connect In" , "img4");
-        connect_metatdata.set("The Particle Dao" , "img5");
-        connect_metatdata.set("Waves of Hope" , "img6");
+connect_metatdata.set("The Duel", "img1");
+connect_metatdata.set("Familer Life", "img2");
+connect_metatdata.set("City Life Algarve,Portugal 1977", "img3");
+connect_metatdata.set("Fox Connect In", "img4");
+connect_metatdata.set("The Particle Dao", "img5");
+connect_metatdata.set("Waves of Hope", "img6");
 
-   
+

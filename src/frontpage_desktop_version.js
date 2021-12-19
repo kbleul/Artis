@@ -36,7 +36,7 @@ function Header() {
 
     function Searchinput() {
         return (<><form style={styles.searchform_style} onSubmit={handleSearch}>
-            <input autoFocus={true} key="search" style={togglestylestate[0].searchinput_style} type="text" list="suggestions" value={searchinput} onChange={onSearchInput} placeholder="Search..."/>
+            <input autoFocus={true} key="search" style={togglestylestate[0].searchinput_style} type="text" list="suggestions" value={searchinput} onChange={onSearchInput} placeholder="Search..." />
         </form>
         </>);
     }
@@ -83,18 +83,18 @@ function Header() {
     return (<>
         <header id="header_wrapper" style={togglestylestate[0].header_style}>
 
-            {showsearchform ? 
+            {showsearchform ?
                 <section style={styles.searchformcontainer_style}>
-                <Searchinput />  
-                <Link to={`/${searchinput}`} >
-                <button onClick={searchAction} style={togglestylestate[0].searchactionbtn_style}>
-                    <svg onMouseOver={() => { set_searchsvg_fill("red") }} onMouseOut={() => { set_searchsvg_fill("#fff") }}
+                    <Searchinput />
+                    <Link to={`/${searchinput}`} >
+                        <button onClick={searchAction} style={togglestylestate[0].searchactionbtn_style}>
+                            <svg onMouseOver={() => { set_searchsvg_fill("red") }} onMouseOut={() => { set_searchsvg_fill("#fff") }}
 
-                        xmlns="http://www.w3.org/2000/svg" width="2em" height="1.8em" viewBox="0 0 32 32">
-                        <path d="M29 27.586l-7.552-7.552a11.018 11.018 0 1 0-1.414 1.414L27.586 29zM4 13a9 9 0 1 1 
+                                xmlns="http://www.w3.org/2000/svg" width="2em" height="1.8em" viewBox="0 0 32 32">
+                                <path d="M29 27.586l-7.552-7.552a11.018 11.018 0 1 0-1.414 1.414L27.586 29zM4 13a9 9 0 1 1 
         9 9a9.01 9.01 0 0 1-9-9z" fill={togglestylestate[0].searchfill} /></svg>
-                </button>
-            </Link></section>
+                        </button>
+                    </Link></section>
                 : <><section style={styles.headerbtnscontainers_style}>
                     <Link to="/"><h1 id="logo" style={togglestylestate[0].h1}>ARTis</h1></Link>
                     <section style={styles.leftbtnscontainer_style}>
@@ -119,7 +119,7 @@ function Header() {
 }
 
 function MenuSection(prop) {
-      const togglestylestate = useContext(lightdarkmode_context);
+    const togglestylestate = useContext(lightdarkmode_context);
 
     const [lightmode, set_lightmode] = useState(true);
 
@@ -130,15 +130,15 @@ function MenuSection(prop) {
     return (<section >
 
         {lightmode ? <button style={styles.leftbtns_style}
-        onClick={() => { set_lightmode(false); togglestylestate[1](darkmode_styles); styles.currentmode = "dark"; console.log("dark")    }} >
+            onClick={() => { set_lightmode(false); togglestylestate[1](darkmode_styles); styles.currentmode = "dark"; console.log("dark") }} >
 
             <svg xmlns="http://www.w3.org/2000/svg" width="5em" height="3.5em" viewBox="0 0 48 48"><g fill="none"><path d="M9.5 24a5 5 0 1 1 10 0a5 5 0 0 1-10 0z" fill="currentColor" /><path d="M4 24c0-5.523 4.477-10 10-10h20c5.523 0 10 4.477 10 10s-4.477 10-10 10H14C8.477 34 4 29.523 4 24zm10-7.5a7.5 7.5 0 0 0 0 15h20a7.5 7.5 0 0 0 0-15H14z" fill={styles.searchfill} /></g></svg>
         </button> :
 
 
             <button style={styles.leftbtns_style}
-            onClick={() => { set_lightmode(true); togglestylestate[1](styles); styles.currentmode = "light"; console.log("light")  }}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="5em" height="3.5em" viewBox="0 0 48 48"><g fill="white"><path d="M44 24c0-5.523-4.477-10-10-10H14C8.477 14 4 18.477 4 24s4.477 10 10 10h20c5.523 0 10-4.477 10-10zm-5.5 0a5 5 0 1 1-10 0a5 5 0 0 1 10 0z" fill="white"/></g></svg>
+                onClick={() => { set_lightmode(true); togglestylestate[1](styles); styles.currentmode = "light"; console.log("light") }}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="5em" height="3.5em" viewBox="0 0 48 48"><g fill="white"><path d="M44 24c0-5.523-4.477-10-10-10H14C8.477 14 4 18.477 4 24s4.477 10 10 10h20c5.523 0 10-4.477 10-10zm-5.5 0a5 5 0 1 1-10 0a5 5 0 0 1 10 0z" fill="white" /></g></svg>
             </button>
         }
     </section>)
@@ -322,8 +322,8 @@ function ViewImg() {
 
     return (<>
         <lightdarkmode_context.Provider value={[togglestyle, set_togglestyle]}>
-        <Header togglestylestate={[togglestyle, set_togglestyle]} />
-    </lightdarkmode_context.Provider>
+            <Header togglestylestate={[togglestyle, set_togglestyle]} />
+        </lightdarkmode_context.Provider>
 
         <section style={togglestyle.halfpagecontainer_style}>
             <div style={togglestyle.viewimg_containerstyle} >
@@ -357,9 +357,9 @@ function ViewImg() {
 
                 <article style={styles.bottombox_maincontainer}>
 
-                <lightdarkmode_context.Provider value={[togglestyle, set_togglestyle]}>
-                <CommentsSection artobject={art} togglestylestate={[togglestyle, set_togglestyle]} />
-                </lightdarkmode_context.Provider>
+                    <lightdarkmode_context.Provider value={[togglestyle, set_togglestyle]}>
+                        <CommentsSection artobject={art} togglestylestate={[togglestyle, set_togglestyle]} />
+                    </lightdarkmode_context.Provider>
                     <SuggestionImgs artobject={art} />
                 </article>
             </section>

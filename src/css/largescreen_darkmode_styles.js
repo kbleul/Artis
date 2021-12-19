@@ -1,8 +1,12 @@
+
 const darkmode_styles = {
     header_style: {
-        height: "8vh",
+        display: "flex",
+        height: "7vh",
         width: "100%",
         backgroundColor: "black",
+        justifyContent: "space-detween",
+        alignItems: "center",
         position: "fixed",
         top: "0",
         zIndex: "10",
@@ -12,35 +16,36 @@ const darkmode_styles = {
         fontWeight: "900",
         fontStyle: "cursive",
         fontSize: "2rem",
-        margin: "0",
-        marginLeft: "25%",
-        paddingTop: "6%",
+        marginLeft: "2rem",
+    },
+    halfpagecontainer_style: {
+        backgroundColor: "rgb(55, 55, 55)",
     },
     showsearchformbtn_style: {
         backgroundColor: "black",
         border: "none",
         display: "block",
-        marginLeft: "80%",
-        height: "8vh",
+        marginLeft: "70%",
+        height: "6.9vh",
     },
     searchinput_style: {
         marginRight: "4%",
         marginLeft: "2%",
-        marginTop: "1rem",
         width: "95%",
         height: '1.6rem',
         border: 'none',
         outline: 'none',
-        color: "white",
+        color: 'white',
         fontWeight: 'bold',
-        fontSize: "1rem",
+        fontSize: "1.2rem",
         borderBottom: '1px solid white',
         backgroundColor: "inherit",
     },
     searchactionbtn_style: {
-        backgroundColor: "black",
+        backgroundColor: "inherit",
         border: "none",
     },
+    searchfill: "white",
     maincontainer_style: {
         background: "linear-gradient(black,grey,black)",
         overflowY: "scroll",
@@ -48,13 +53,8 @@ const darkmode_styles = {
         marginTop: "7vh"
     },
     viewimg_containerstyle: {
-        // backgroundColor: "#403939",  //removed
         background: "linear-gradient(black,grey)",//added
         marginBottom: ".5rem", //changed
-    },
-    searchfill: "white",
-    halfpagecontainer_style: {
-        backgroundColor: "rgb(55, 55, 55)",
     },
     arttitlecontainer_style: {
         margin: "0",
@@ -89,14 +89,13 @@ const darkmode_styles = {
         fontWeight: "900",
         margin: "0",
         alignSelf: "center",
-        color: "aliceblue",
-    },
+        color: "white",
+    },///////
     accountpar_style: {
         marginLeft: "5.5%",
         fontSize: ".9rem",
         textDecoration: "underline",
         color: "aliceblue",
-        //margintop removed
     },
     buybtn_style: {
         padding: "0rem 1.6rem",
@@ -119,8 +118,7 @@ const darkmode_styles = {
         marginLeft: "5%",
         border: "none",
         borderBottom: "1px solid white",
-        height: "3.3rem",
-        paddingTop: "5%",
+        paddingTop: "3%",
         outline: "none",
         backgroundColor: "inherit",
         color: "white",
@@ -155,6 +153,7 @@ const darkmode_styles = {
         borderBottom: "1px solid #4f4f4f",
         color: "white",
     },
+
 
 }
 
